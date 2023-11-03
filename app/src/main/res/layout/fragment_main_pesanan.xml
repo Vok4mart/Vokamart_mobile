@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:id="@+id/header_pesanan"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/menu"/>
+
+        <TextView
+            android:id="@+id/tambahproduk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="35sp"
+            android:text="Pesanan"
+            android:fontFamily="@font/lexendbold"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+
+    <View
+        android:id="@+id/view_garis_pesanan"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/GreyText"
+        android:layout_below="@id/header_pesanan"/>
+
+    <EditText
+        android:layout_below="@id/view_garis_pesanan"
+        android:layout_marginTop="10dp"
+        android:id="@+id/cari_pesanan"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_height="49dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/search_border"
+        android:height="60dp"
+        android:inputType="text"
+        android:hint="  Pencarian"
+        android:autofillHints="name"
+        android:fontFamily="@font/lexendregular"
+        android:textSize="15sp"
+        android:paddingStart="8dp"/>
+
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/TabLayoutPesanan"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/cari_pesanan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="scrollable"
+            app:tabIndicatorColor="@color/RedPrimary"
+            app:tabRippleColor="@color/RedPrimary"
+            app:tabTextAppearance="@style/MyTabTextAppearance"
+            app:tabSelectedTextColor="@color/RedPrimary"
+            app:tabGravity="fill">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pesanan Baru"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Perlu Dikirim"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dikirim"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selesai"/>
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:text="Dikomplain"/>
+
+        </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:layout_below="@id/cari_pesanan"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    <View
+        android:id="@+id/garis_bawah_tab"
+        android:layout_marginTop="80dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/GreyText"
+        android:layout_below="@id/cari_pesanan"/>
+
+</RelativeLayout>

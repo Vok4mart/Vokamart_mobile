@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Apptheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <item name="colorPrimary">@color/RedPrimary</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item> <!-- This sets the status bar icons to dark -->
+    </style>
+
+    <style name="MyTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabBackground">@color/white</item>
+        <item name="tabTextAppearance">@style/MyTabTextAppearance</item>
+        <item name="tabIndicatorColor">@color/RedPrimary</item>
+        <!-- Add other styling attributes as needed -->
+    </style>
+
+    <style name="MyTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/GreyText</item>
+        <item name="fontFamily">@font/lexendregular</item>
+        <!-- Add other text styling attributes as needed -->
+    </style>
+
+
+
+</resources>
