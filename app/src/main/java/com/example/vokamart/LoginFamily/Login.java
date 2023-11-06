@@ -9,8 +9,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.vokamart.apiResponse;
+import com.example.vokamart.retrofit_client;
+import com.example.vokamart.userpostrequest;
 import com.example.vokamart.MainFamily.home;
 import com.example.vokamart.R;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Login extends AppCompatActivity {
     @Override
@@ -47,12 +54,43 @@ public class Login extends AppCompatActivity {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
 
-
+                createPost(email,password);
 
             }
         });
 
 
+    }
+
+    private void createPost(String email, String password) {
+
+        retrofit_client.INSTANCE.getInstance().post(new userpostrequest(email,password)).enqueue(new Callback<apiResponse>() {
+            @Override
+            public void onResponse(Call<apiResponse> call, Response<apiResponse> response) {
+                if(response.isSuccessful()){
+                    apiResponse apiResponse = response.body();
+                    if(apiResponse != null && apiResponse.getStatus().equals("Sukses")){
+
+                        System.out.println("Request success. Response: " + email);
+                        System.out.println("Request success. Response: " + password);
+
+                        Intent i = new Intent(Login.this, home.class);
+                        startActivity(i);
+
+                    } else {
+                        System.out.println("Unexpected response: " + apiResponse);
+                    }
+                } else {
+                    System.out.println("Server error, Status Code: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<apiResponse> call, Throwable t) {
+                System.out.println("Request Failed: " + t.getMessage());
+
+            }
+        });
     }
 
 
