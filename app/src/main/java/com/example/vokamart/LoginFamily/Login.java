@@ -9,15 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.vokamart.Connection.ResponsePackage.APIResponse;
-import com.example.vokamart.Connection.RetrofitClient;
-import com.example.vokamart.Connection.UserPostRequest;
 import com.example.vokamart.MainFamily.home;
 import com.example.vokamart.R;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Login extends AppCompatActivity {
     @Override
@@ -54,7 +47,7 @@ public class Login extends AppCompatActivity {
                 String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
 
-                createPost(email, password);
+
 
             }
         });
@@ -62,35 +55,6 @@ public class Login extends AppCompatActivity {
 
     }
 
-    private void createPost(String email, String password) {
 
-        RetrofitClient.INSTANCE.getInstance().post(new UserPostRequest(email,password)).enqueue(new Callback<APIResponse>() {
-            @Override
-            public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
-                if(response.isSuccessful()){
-                    APIResponse apiResponse = response.body();
-                    if(apiResponse != null && apiResponse.getStatus().equals("Sukses")){
-
-                        System.out.println("Request success. Response: " + email);
-                        System.out.println("Request success. Response: " + password);
-
-                            Intent i = new Intent(Login.this, home.class);
-                            startActivity(i);
-
-                    } else {
-                        System.out.println("Unexpected response: " + apiResponse);
-                    }
-                } else {
-                    System.out.println("Server error, Status Code: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<APIResponse> call, Throwable t) {
-                System.out.println("Request Failed: " + t.getMessage());
-
-            }
-        });
-    }
 
 }
