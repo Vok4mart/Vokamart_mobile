@@ -8,50 +8,52 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vokamart.Models.MPerluDikirim;
 import com.example.vokamart.Models.Mpesanan_baru;
 import com.example.vokamart.R;
 
 import java.util.ArrayList;
 
-public class PesananBaru extends RecyclerView.Adapter<PesananBaru.MyViewHolder>{
+public class AdapterPerluDikirim extends RecyclerView.Adapter<AdapterPerluDikirim.MyViewholder> {
 
-    private final ArrayList<Mpesanan_baru> Mpesanan_baru;
+    private final ArrayList<MPerluDikirim> MPerluDikirim;
 
-    public PesananBaru(ArrayList<Mpesanan_baru> Mpesanan_baru) {
-        this.Mpesanan_baru = Mpesanan_baru;
+    public AdapterPerluDikirim(ArrayList<MPerluDikirim> MPerluDikirim) {
+        this.MPerluDikirim = MPerluDikirim;
     }
 
     @NonNull
     @Override
-    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AdapterPerluDikirim.MyViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.card_item_pesanan, parent, false);
-        return new MyViewHolder(view);
+        return new MyViewholder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Mpesanan_baru pesanan = Mpesanan_baru.get(position);
+    public void onBindViewHolder(@NonNull AdapterPerluDikirim.MyViewholder holder, int position) {
+        MPerluDikirim pesanan = MPerluDikirim.get(position);
 
         holder.nama_produk.setText(pesanan.getNama_produk());
         holder.alamat_lengkap.setText(pesanan.getAlamat_lengkap());
         holder.kurir.setText(pesanan.getKurir());
         holder.harga_produk.setText("Harga: " + pesanan.getHarga_produk());
+
     }
 
     @Override
     public int getItemCount() {
-        return Mpesanan_baru.size();
+        return MPerluDikirim.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewholder extends RecyclerView.ViewHolder {
 
         TextView nama_produk;
         TextView alamat_lengkap;
         TextView kurir;
         TextView harga_produk;
+        public MyViewholder(@NonNull View itemView) {
 
-        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             nama_produk = itemView.findViewById(R.id.nama_Pesanan);
