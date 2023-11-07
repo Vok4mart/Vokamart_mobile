@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:text="Logout"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="25dp"
         android:layout_marginTop="33dp"
         android:textSize="18sp"
         android:textColor="@color/RedPrimary"
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="30dp"
-            android:src="@drawable/menu"/>
+            android:src="@drawable/menu" />
 
         <TextView
             android:id="@+id/tambahproduk"
@@ -36,9 +36,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10sp"
             android:layout_marginTop="35sp"
-            android:text="Profil"
             android:fontFamily="@font/lexendbold"
-            android:textSize="20sp"/>
+            android:text="Profil"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <View
@@ -67,73 +67,84 @@
 
 
     <LinearLayout
-        android:layout_below="@+id/img_profil"
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/img_profil"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <TextView
-            android:layout_marginTop="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nama"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/lexendsemibold"
             android:paddingStart="40dp"
+            android:text="Nama"
             android:textSize="20sp"
-            android:fontFamily="@font/lexendsemibold"/>
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:paddingStart="40dp"
             android:paddingEnd="40dp"
-            android:paddingStart="40dp"/>
+            android:layout_marginTop="3dp"
+            android:text="Name example"
+            android:fontFamily="@font/lexendregular"
+            android:textSize="18dp"/>
 
         <TextView
-            android:layout_marginTop="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/lexendsemibold"
+            android:paddingStart="40dp"
             android:text="Email"
             android:textSize="20sp"
-            android:paddingStart="40dp"
-            android:fontFamily="@font/lexendsemibold"/>
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:fontFamily="@font/lexendregular"
+            android:paddingStart="40dp"
             android:paddingEnd="40dp"
-            android:paddingStart="40dp"/>
+            android:text="@string/example_gmail_com"
+            android:textSize="18sp"
+            android:layout_marginTop="3dp"/>
 
         <TextView
-            android:layout_marginTop="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15sp"
+            android:fontFamily="@font/lexendsemibold"
             android:paddingStart="40dp"
             android:text="No. HP"
             android:textSize="20sp"
-            android:fontFamily="@font/lexendsemibold"/>
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingEnd="40dp"
+            android:fontFamily="@font/lexendregular"
             android:paddingStart="40dp"
-            android:layout_marginTop="15dp"/>
+            android:paddingEnd="40dp"
+            android:text="@string/example_gmail_com"
+            android:textSize="18sp"
+            android:layout_marginTop="3dp"/>
 
         <Button
             android:id="@+id/button_ubah_profil"
-            android:background="@drawable/button_primary"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
-            android:text="Ubah"
-            android:fontFamily="@font/lexendsemibold"
-            android:textColor="@color/white"
             android:layout_marginStart="20dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="20dp"
-            />
-        
+            android:background="@drawable/button_primary"
+            android:fontFamily="@font/lexendsemibold"
+            android:text="Ubah"
+            android:textColor="@color/white" />
+
     </LinearLayout>
 
 </RelativeLayout>
