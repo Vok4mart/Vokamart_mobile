@@ -10,15 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-//import com.example.vokamart.Adapter.OrderAdapter;
-//import com.example.vokamart.Models.Pesanan;
 import com.example.vokamart.Adapter.AdapterPesananDikirim;
-import com.example.vokamart.Adapter.PesananBaru;
-import com.example.vokamart.Models.Mpesanan_baru;
+
+import com.example.vokamart.Models.MDikirim;
+
 import com.example.vokamart.R;
 
 import java.util.ArrayList;
-import java.util.List;
+
 //
 ///**
 // * A simple {@link Fragment} subclass.
@@ -72,7 +71,7 @@ public class Dikirim extends Fragment {
 //    }
 
     private AdapterPesananDikirim adapter;
-    private ArrayList<Dikirim> pesananArrayList;
+    private ArrayList<MDikirim> pesananArrayList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,12 +100,12 @@ public class Dikirim extends Fragment {
 
     private void addData() {
         pesananArrayList = new ArrayList<>();
-        pesananArrayList.add(new Dikirim("Donat Kentang", "Banyuwangi", "JNT INDO",1333));
-        pesananArrayList.add(new Dikirim("Motherboard", "Bali", "Jnt Bali", 10000));
-        pesananArrayList.add(new Dikirim("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new Dikirim("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new Dikirim("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new Dikirim("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new Dikirim("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+        pesananArrayList.add(new MDikirim("Donat Kentang", "Banyuwangi", "JNT INDO",1333));
+        pesananArrayList.add(new MDikirim("Motherboard", "Bali", "Jnt Bali", 10000));
+        pesananArrayList.add(new MDikirim("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+        pesananArrayList.add(new MDikirim("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+        pesananArrayList.add(new MDikirim("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+        pesananArrayList.add(new MDikirim("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+        pesananArrayList.add(new MDikirim("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
     }
 }

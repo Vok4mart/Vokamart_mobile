@@ -116,7 +116,7 @@
             android:background="@drawable/search_border"
             android:inputType="text"
             android:fontFamily="@font/lexendregular"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"/>
 

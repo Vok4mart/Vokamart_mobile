@@ -8,40 +8,41 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.vokamart.Models.MDikirim;
+import com.example.vokamart.Models.MDikomplain;
 import com.example.vokamart.R;
 
 import java.util.ArrayList;
 
-public class AdapterPesananDikirim extends RecyclerView.Adapter<AdapterPesananDikirim.MyViewholder> {
+public class PesananDikomplain extends RecyclerView.Adapter<PesananDikomplain.MyViewholder> {
 
-    private final ArrayList<MDikirim> MDikirim;
+    private final ArrayList<MDikomplain> MDikomplain;
 
-    public AdapterPesananDikirim(ArrayList<MDikirim> MDikirim) {
-        this.MDikirim = MDikirim;
+    public PesananDikomplain(ArrayList<MDikomplain> MDikomplain) {
+        this.MDikomplain = MDikomplain;
     }
 
     @NonNull
     @Override
-    public AdapterPesananDikirim.MyViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public PesananDikomplain.MyViewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View view = layoutInflater.inflate(R.layout.card_item_pesanan, parent, false);
         return new MyViewholder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterPesananDikirim.MyViewholder holder, int position) {
-        MDikirim pesanan = MDikirim.get(position);
+    public void onBindViewHolder(@NonNull PesananDikomplain.MyViewholder holder, int position) {
+        MDikomplain pesanan = MDikomplain.get(position);
 
         holder.nama_produk.setText(pesanan.getNama_produk());
         holder.alamat_lengkap.setText(pesanan.getAlamat_lengkap());
         holder.kurir.setText(pesanan.getKurir());
         holder.harga_produk.setText("Harga: " + pesanan.getHarga_produk());
+
     }
 
     @Override
     public int getItemCount() {
-        return MDikirim.size();
+        return MDikomplain.size();
     }
 
     public class MyViewholder extends RecyclerView.ViewHolder {
