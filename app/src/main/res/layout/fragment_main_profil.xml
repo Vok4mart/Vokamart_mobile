@@ -84,6 +84,7 @@
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/nama_profil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="40dp"
@@ -91,7 +92,7 @@
             android:layout_marginTop="3dp"
             android:text="Name example"
             android:fontFamily="@font/lexendregular"
-            android:textSize="18dp"/>
+            android:textSize="18sp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,6 +105,7 @@
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/email_profil"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lexendregular"
@@ -113,25 +115,6 @@
             android:textSize="18sp"
             android:layout_marginTop="3dp"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15sp"
-            android:fontFamily="@font/lexendsemibold"
-            android:paddingStart="40dp"
-            android:text="No. HP"
-            android:textSize="20sp"
-            android:textColor="@color/black"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/lexendregular"
-            android:paddingStart="40dp"
-            android:paddingEnd="40dp"
-            android:text="@string/example_gmail_com"
-            android:textSize="18sp"
-            android:layout_marginTop="3dp"/>
 
         <Button
             android:id="@+id/button_ubah_profil"
