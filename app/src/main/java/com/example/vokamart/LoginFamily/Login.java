@@ -110,8 +110,11 @@ public class Login extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Login Sukses!", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getApplicationContext(), "No data found in the response.", Toast.LENGTH_SHORT).show();
-                    }
-                } else if (code == 404 && !status.equals("Sukses")) {
+                    } 
+                } else if(code == 401){
+                    Toast.makeText(this, "Password atau Email Salah", Toast.LENGTH_SHORT).show();
+                }
+                else if (code == 404 && !status.equals("Sukses")) {
                     Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {

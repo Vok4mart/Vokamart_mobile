@@ -51,4 +51,12 @@
         android:background="@color/GreyText"
         android:layout_below="@id/header_pesanan"/>
 
+    <com.github.mikephil.charting.charts.BarChart
+        android:padding="20dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/barchart"
+        android:layout_below="@id/view_garis_dashboard"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"/>
+
 </RelativeLayout>
