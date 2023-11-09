@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,8 +60,10 @@ public class Register extends AppCompatActivity {
         btnRegist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (validateInput()) {
+                    register();
+                }
 
-                register();
             }
         });
 
@@ -112,6 +115,44 @@ public class Register extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
+
+    private boolean validateInput() {
+
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+        String username = etUsername.getText().toString().trim();
+
+        boolean isValidEmail = false;
+        boolean isValidPassword = false;
+        boolean isValidUsername = false;
+
+        if (email.isEmpty()) {
+            etEmail.setError("Email dibutuhkan");
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Format email salah");
+        } else {
+            isValidEmail = true;
+        }
+
+        if (password.isEmpty()) {
+            etPassword.setError("Password dibutuhkan");
+        } else if (password.length() < 5) {
+            etPassword.setError("Password terlalu pendek");
+        } else {
+            isValidPassword = true;
+        }
+
+        if (username.isEmpty()) {
+            etUsername.setError("Username dibutuhkan"); // Fix the typo here
+        } else {
+            isValidUsername = true;
+        }
+
+        btnRegist.setEnabled(isValidEmail && isValidPassword && isValidUsername);
+
+        return isValidEmail && isValidPassword && isValidUsername;
+    }
+
 
 
 
