@@ -4,15 +4,31 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.content.Context;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.example.vokamart.API.Constant;
 import com.example.vokamart.R;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class Register extends AppCompatActivity {
 
@@ -41,5 +57,103 @@ public class Register extends AppCompatActivity {
             }
         });
 
+        btnRegist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (validateInput()) {
+                    register();
+                }
+
+            }
+        });
+
     }
+
+
+    private void register() {
+        JSONObject jsonRequest = new JSONObject();
+        try {
+            jsonRequest.put("email_akun", etEmail.getText().toString().trim());
+            jsonRequest.put("password", etPassword.getText().toString().trim());
+            jsonRequest.put("nama_akun", etUsername.getText().toString().trim()); // Add user name
+            jsonRequest.put("user_level", "1"); // Set user level as needed
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, Constant.REGIST, jsonRequest,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            int code = response.getInt("code");
+                            String status = response.getString("status");
+
+                            if (code == 201 && status.equals("User Registered")) {
+                                // Registration successful
+                                Toast.makeText(getApplicationContext(), "Registration Successful!", Toast.LENGTH_SHORT).show();
+                            } else if (code == 406 && status.equals("User has been registered!")) {
+                                // User already registered
+                                Toast.makeText(getApplicationContext(), "User already registered.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Handle other status codes or errors
+                                Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "JSON ERROR", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(request);
+    }
+
+    private boolean validateInput() {
+
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+        String username = etUsername.getText().toString().trim();
+
+        boolean isValidEmail = false;
+        boolean isValidPassword = false;
+        boolean isValidUsername = false;
+
+        if (email.isEmpty()) {
+            etEmail.setError("Email dibutuhkan");
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Format email salah");
+        } else {
+            isValidEmail = true;
+        }
+
+        if (password.isEmpty()) {
+            etPassword.setError("Password dibutuhkan");
+        } else if (password.length() < 5) {
+            etPassword.setError("Password terlalu pendek");
+        } else {
+            isValidPassword = true;
+        }
+
+        if (username.isEmpty()) {
+            etUsername.setError("Username dibutuhkan"); // Fix the typo here
+        } else {
+            isValidUsername = true;
+        }
+
+        btnRegist.setEnabled(isValidEmail && isValidPassword && isValidUsername);
+
+        return isValidEmail && isValidPassword && isValidUsername;
+    }
+
+
+
+
 }

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.vokamart.Adapter.PesananBaru;
-import com.example.vokamart.Models.Mpesanan_baru;
+import com.example.vokamart.Models.MPesananBaru;
 import com.example.vokamart.R;
 
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class FPesananBaru extends Fragment {
 
     private PesananBaru adapter;
-    private ArrayList<Mpesanan_baru> pesananArrayList;
+    private ArrayList<MPesananBaru> pesananArrayList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,12 +47,12 @@ public class FPesananBaru extends Fragment {
 
     private void addData() {
         pesananArrayList = new ArrayList<>();
-        pesananArrayList.add(new Mpesanan_baru("Donat Kentang", "Banyuwangi", "JNT INDO",1333));
-        pesananArrayList.add(new Mpesanan_baru("Motherboard", "Bali", "Jnt Bali", 10000));
-        pesananArrayList.add(new Mpesanan_baru("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new Mpesanan_baru("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new Mpesanan_baru("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new Mpesanan_baru("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new Mpesanan_baru("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+        pesananArrayList.add(new MPesananBaru("Donat Kentang", "Banyuwangi", "JNT INDO",1333));
+        pesananArrayList.add(new MPesananBaru("Motherboard", "Bali", "Jnt Bali", 10000));
+        pesananArrayList.add(new MPesananBaru("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+        pesananArrayList.add(new MPesananBaru("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+        pesananArrayList.add(new MPesananBaru("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+        pesananArrayList.add(new MPesananBaru("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+        pesananArrayList.add(new MPesananBaru("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
     }
 }

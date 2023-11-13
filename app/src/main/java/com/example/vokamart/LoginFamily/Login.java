@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -49,38 +50,24 @@ public class Login extends AppCompatActivity {
         text = findViewById(R.id.text_disini_login);
         text2 = findViewById(R.id.Lupa_Pass_Text);
 
-        text2.setOnClickListener(v-> {
+        text2.setOnClickListener(v -> {
             Intent i = new Intent(Login.this, Lupa_Password.class);
             startActivity(i);
         });
 
-        text.setOnClickListener(v-> {
+        text.setOnClickListener(v -> {
             Intent i = new Intent(Login.this, Register.class);
             startActivity(i);
         });
 
-        btnlogin.setOnClickListener(v-> {
-            if (validate()) {
+        btnlogin.setOnClickListener(v -> {
+            if (validateInput()) {
                 login();
             }
         });
     }
 
-    private boolean validate() {
-        if (etEmail.getText().toString().isEmpty()) {
-            return false;
-        }
 
-        if (etPassword.getText().toString().isEmpty()) {
-            return false;
-        }
-
-        if (etPassword.getText().toString().length() < 5) {
-            return false;
-        }
-
-        return true;
-    }
 
     private void login() {
         StringRequest request = new StringRequest(Request.Method.POST, Constant.LOGIN, response -> {
@@ -111,6 +98,8 @@ public class Login extends AppCompatActivity {
                     } else {
                         Toast.makeText(getApplicationContext(), "No data found in the response.", Toast.LENGTH_SHORT).show();
                     }
+                } else if (code == 401) {
+                    Toast.makeText(this, "Password atau Email Salah", Toast.LENGTH_SHORT).show();
                 } else if (code == 404 && !status.equals("Sukses")) {
                     Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
                 }
@@ -135,5 +124,37 @@ public class Login extends AppCompatActivity {
         queue.add(request);
     }
 
+    private boolean validateInput() {
+
+        String email = etEmail.getText().toString().trim();
+        String password = etPassword.getText().toString().trim();
+
+
+        boolean isValidEmail = false;
+        boolean isValidPassword = false;
+
+        if (email.isEmpty()) {
+            etEmail.setError("Email dibutuhkan");
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Format email salah");
+        } else {
+            isValidEmail = true;
+        }
+
+        if (password.isEmpty()) {
+            etPassword.setError("Password dibutuhkan");
+        } else if (password.length() < 5) {
+            etPassword.setError("Password terlalu pendek");
+        } else {
+            isValidPassword = true;
+        }
+
+        btnlogin.setEnabled(isValidEmail && isValidPassword);
+
+
+        return isValidEmail && isValidPassword;
+
+
+    }
 
 }
