@@ -7,28 +7,30 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.vokamart.MainFamily.list_produk;
 import com.example.vokamart.Models.produk;
 import com.example.vokamart.R;
 
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
-    private final ArrayList<produk> produkArrayList;
+    private ArrayList<produk> produkArrayList;
+private Context context;
 
-    public ProductAdapter(ArrayList<produk> produkArrayList) {
+    public ProductAdapter(Context context, ArrayList<produk> produkArrayList) {
         this.produkArrayList = produkArrayList;
+        this.context = context;
     }
 
-    @NonNull
     @Override
-    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.card_item, parent, false);
+    public ProductViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.card_item, parent, false);
         return new ProductViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+    public void onBindViewHolder(ProductViewHolder holder, int position) {
         produk product = produkArrayList.get(position);
 
         holder.ProductName.setText(product.getNama());

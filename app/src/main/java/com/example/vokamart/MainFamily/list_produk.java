@@ -11,37 +11,48 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.ProductAdapter;
 import com.example.vokamart.Models.produk;
 import com.example.vokamart.R;
 
-import java.util.ArrayList;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
 
 public class list_produk extends Fragment {
     private ProductAdapter adapter;
     private ArrayList<produk> produkArrayList;
+    private RecyclerView recyclerView;
+    private RequestQueue requestQueue;
+    private View rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Initialize the data if it hasn't been already
-        if (produkArrayList == null) {
-            addData();
-        }
+        rootView = inflater.inflate(R.layout.fragment_main_list_produk, container, false);
 
-        // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_main_list_produk, container, false);
-        RecyclerView recyclerView = rootView.findViewById(R.id.recycler_list_produk);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-
-        // Initialize the adapter if it hasn't been already
-        if (adapter == null) {
-            adapter = new ProductAdapter(produkArrayList);
-        }
-
+        recyclerView = rootView.findViewById(R.id.recycler_list_produk);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
+
+        produkArrayList = new ArrayList<>();
+
+        if (getContext() != null) {
+            requestQueue = Volley.newRequestQueue(getContext());
+            parseJSON(); // Panggil method parseJSON jika konteks tidak null
+        } else {
+            Toast.makeText(getContext(), "Konteks null", Toast.LENGTH_SHORT).show();
+        }
 
         ImageView imageView = rootView.findViewById(R.id.plus);
 
@@ -56,17 +67,39 @@ public class list_produk extends Fragment {
         return rootView;
     }
 
+    private void parseJSON() {
+        String url = "https://vok4mart.000webhostapp.com/TestApiProduct.php";
 
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("result");
 
-    private void addData() {
-        produkArrayList = new ArrayList<>();
-        produkArrayList.add(new produk("Donat Kentang", 121821, 12));
-        produkArrayList.add(new produk("Motherboard", 1300000, 5));
-        produkArrayList.add(new produk("Sepatu la Tetanus", 250000, 8));
-        produkArrayList.add(new produk("Donat Kentang", 121821, 12));
-        produkArrayList.add(new produk("Motherboard", 1300000, 5));
-        produkArrayList.add(new produk("Sepatu la Tetanus", 250000, 8));
-        produkArrayList.add(new produk("Donat Kentang", 121821, 12));
-        produkArrayList.add(new produk("Motherboard", 1300000, 5));
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject hit = jsonArray.getJSONObject(i);
+
+                                String nama = hit.getString("Nama_produk");
+                                int harga = hit.getInt("Harga_produk");
+                                int stok = hit.getInt("berat");
+
+                                produkArrayList.add(new produk(nama, harga, stok));
+                            }
+
+                            adapter = new ProductAdapter(getContext(), produkArrayList);
+                            recyclerView.setAdapter(adapter);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        requestQueue.add(request);
     }
 }
