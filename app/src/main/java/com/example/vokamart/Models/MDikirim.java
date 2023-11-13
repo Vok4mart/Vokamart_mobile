@@ -1,6 +1,6 @@
 package com.example.vokamart.Models;
 
-public class MDikirim {
+public  class MDikirim {
 
     private String nama_produk, alamat_lengkap, kurir;
     private int harga_produk;
