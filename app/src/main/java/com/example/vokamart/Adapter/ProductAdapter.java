@@ -1,6 +1,7 @@
 package com.example.vokamart.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.vokamart.DetailActivity.DetailProduk;
 import com.example.vokamart.MainFamily.list_produk;
 import com.example.vokamart.Models.produk;
 import com.example.vokamart.R;
@@ -15,8 +17,8 @@ import com.example.vokamart.R;
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
-    private ArrayList<produk> produkArrayList;
-private Context context;
+    private static ArrayList<produk> produkArrayList;
+private static Context context;
 
     public ProductAdapter(Context context, ArrayList<produk> produkArrayList) {
         this.produkArrayList = produkArrayList;
@@ -43,7 +45,7 @@ private Context context;
         return produkArrayList.size();
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder {
+    public static class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView ProductName;
         TextView ProductPrice;
         TextView ProductStock;
@@ -54,6 +56,16 @@ private Context context;
             ProductName = itemView.findViewById(R.id.nama_produk);
             ProductPrice = itemView.findViewById(R.id.harga_produk);
             ProductStock = itemView.findViewById(R.id.stok_produk);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            Intent intent = new Intent(context, DetailProduk.class);
+            intent.putExtra("ProductName", produkArrayList.get(position).getNama());
+            context.startActivity(intent);
+
         }
     }
 }
