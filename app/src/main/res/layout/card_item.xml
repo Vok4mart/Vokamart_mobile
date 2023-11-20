@@ -40,7 +40,7 @@
             android:layout_marginTop="5dp"
             android:text="@string/stok"
             android:fontFamily="@font/lexendregular"
-            android:textColor="@color/black"/>
+            android:textColor="@color/RedPrimary"/>
         <TextView
             android:layout_below="@+id/harga_produk"
             android:id="@+id/stok_produk"
