@@ -189,26 +189,14 @@
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/autodrop_kategori"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="200dp"
-                android:layout_height="70dp"
+            <Spinner
+                android:id="@+id/spinner_kategori"
                 android:layout_marginTop="10dp"
-                app:boxCornerRadiusBottomEnd="10dp"
-                app:boxCornerRadiusBottomStart="10dp"
-                app:boxCornerRadiusTopEnd="10dp"
-                app:boxCornerRadiusTopStart="10dp">
-
-                <AutoCompleteTextView
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/lexendregular"
-                    android:hint="Kategori"/>
-
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_spinner"
+                android:padding="5dp"
+                android:spinnerMode="dropdown" />
 
 
             <com.google.android.material.textfield.TextInputLayout

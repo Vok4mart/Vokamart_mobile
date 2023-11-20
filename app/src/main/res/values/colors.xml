@@ -6,4 +6,5 @@
     <color name="GreyText">#AAAAAA</color>
     <color name="BlueHyperLink">#52B8F2</color>
     <color name="RedAccent">#FDEFEF</color>
+    <color name="Disabled">#9F9F9F</color>
 </resources>
