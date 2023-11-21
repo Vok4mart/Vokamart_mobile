@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/tambah"
-            android:layout_marginStart="178sp"
+            android:layout_marginStart="150sp"
             android:fontFamily="@font/lexendbold"
             android:textColor="@color/RedPrimary"/>
 
@@ -100,6 +100,7 @@
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/Detail_nama_produk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -120,6 +121,7 @@
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/Detail_produk_stok"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -140,6 +142,7 @@
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/Detail_produk_harga"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -160,6 +163,7 @@
             android:textColor="@color/black"/>
 
         <TextView
+            android:id="@+id/Detail_produk_deskripsi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -193,7 +197,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ubah"
-            android:layout_marginStart="250sp"
+            android:layout_marginStart="180sp"
             android:fontFamily="@font/lexendbold"
             android:textColor="@color/RedPrimary"/>
 

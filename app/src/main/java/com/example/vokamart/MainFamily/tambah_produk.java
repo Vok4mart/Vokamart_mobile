@@ -43,9 +43,9 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
         spinner = findViewById(R.id.spinner_kategori);
         spinner.setOnItemClickListener((AdapterView.OnItemClickListener) this);
         TextView textView = findViewById(R.id.text_tambah_variasi);
-        textViewName = (TextView) findViewById(R.id.textViewName);
-        textViewCourse = (TextView) findViewById(R.id.textViewCourse);
-        textViewSession = (TextView) findViewById(R.id.textViewSession);
+//        textViewName = (TextView) findViewById(R.id.textViewName);
+//        textViewCourse = (TextView) findViewById(R.id.textViewCourse);
+//        textViewSession = (TextView) findViewById(R.id.textViewSession);
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override

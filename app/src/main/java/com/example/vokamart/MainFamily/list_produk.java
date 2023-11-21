@@ -1,17 +1,18 @@
 package com.example.vokamart.MainFamily;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -75,21 +76,39 @@ public class list_produk extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONArray jsonArray = response.getJSONArray("result");
+                            if (response != null) {
+                                adapter = new ProductAdapter(getContext(), produkArrayList);
+                                recyclerView.setAdapter(adapter);
+                                JSONArray jsonArray = response.getJSONArray("result");
 
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject hit = jsonArray.getJSONObject(i);
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject hit = jsonArray.getJSONObject(i);
 
-                                String nama = hit.getString("Nama_produk");
-                                int harga = hit.getInt("Harga_produk");
-                                int stok = hit.getInt("berat");
+                                    String nama = hit.getString("Nama_produk");
+                                    int harga = hit.getInt("Harga_produk");
+                                    int stok = hit.getInt("berat");
+                                    String deskripsiProduk = hit.getString("deskripsi_produk");
 
-                                produkArrayList.add(new produk(nama, harga, stok));
+                                    produkArrayList.add(new produk(nama, harga, stok, deskripsiProduk));
+                                }
+
+                                adapter = new ProductAdapter(getContext(), produkArrayList);
+                                recyclerView.setAdapter(adapter);
+
+                                // Simpan data terakhir dari loop
+                                if (!produkArrayList.isEmpty()) {
+                                    SharedPreferences preferences = getContext().getSharedPreferences("detail", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = preferences.edit();
+                                    editor.putString("nama_produk", produkArrayList.get(produkArrayList.size() - 1).getNama());
+                                    editor.putInt("harga_produk", produkArrayList.get(produkArrayList.size() - 1).getHarga());
+                                    editor.putInt("berat", produkArrayList.get(produkArrayList.size() - 1).getStok());
+                                    editor.putString("deskripsi_produk", produkArrayList.get(produkArrayList.size() - 1).getDeskripsi());
+                                    editor.apply();
+                                }
+                            } else {
+                                // Penanganan respons null
+                                Toast.makeText(getContext(), "Respons null", Toast.LENGTH_SHORT).show();
                             }
-
-                            adapter = new ProductAdapter(getContext(), produkArrayList);
-                            recyclerView.setAdapter(adapter);
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

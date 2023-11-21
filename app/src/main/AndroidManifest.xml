@@ -23,6 +23,9 @@
             android:name=".DetailActivity.DetailProduk"
             android:exported="false" />
         <activity
+            android:name=".DetailActivity.DetailPesanan"
+            android:exported="false" />
+        <activity
             android:name=".Navbar"
             android:exported="true"/>
         <activity

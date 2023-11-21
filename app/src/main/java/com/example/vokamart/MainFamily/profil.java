@@ -17,7 +17,6 @@ import com.example.vokamart.R;
 public class profil extends Fragment {
 
     TextView txt_email, txt_nama;
-
     private View view;
     private SharedPreferences preferences;
 
