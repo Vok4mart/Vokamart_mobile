@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     private static ArrayList<produk> produkArrayList;
-private static Context context;
+    private static Context context;
 
     public ProductAdapter(Context context, ArrayList<produk> produkArrayList) {
         this.produkArrayList = produkArrayList;
