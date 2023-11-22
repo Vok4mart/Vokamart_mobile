@@ -1,10 +1,10 @@
 package com.example.vokamart.Models;
 
-public class kategori {
+public class kategoriList {
 
     private String nama_kategori;
 
-    public kategori(String nama) {
+    public kategoriList(String nama) {
         this.nama_kategori = nama;
     }
 
