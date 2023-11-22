@@ -5,15 +5,15 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.vokamart.DetailActivity.DetailProduk;
-import com.example.vokamart.MainFamily.list_produk;
 import com.example.vokamart.Models.produk;
 import com.example.vokamart.R;
-
 import java.util.ArrayList;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
@@ -38,6 +38,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.ProductName.setText(product.getNama());
         holder.ProductPrice.setText("Price: " + product.getHarga());
         holder.ProductStock.setText("Stock: " + product.getStok());
+        Glide.with(holder.itemView.getContext()).load(product.getImageUrl()).into(holder.imageProduct);
     }
 
     @Override
@@ -49,6 +50,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         TextView ProductName;
         TextView ProductPrice;
         TextView ProductStock;
+        ImageView imageProduct;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -56,6 +58,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             ProductName = itemView.findViewById(R.id.nama_produk);
             ProductPrice = itemView.findViewById(R.id.harga_produk);
             ProductStock = itemView.findViewById(R.id.stok_produk);
+            imageProduct = itemView.findViewById(R.id.gambar_produk);
+
             itemView.setOnClickListener(this);
         }
 

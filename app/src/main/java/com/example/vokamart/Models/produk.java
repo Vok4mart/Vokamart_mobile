@@ -5,13 +5,15 @@ public class produk {
     private int harga;
     private int stok;
     private String deskripsi_produk;
-    private String deskripsi;
 
-    public produk(String nama, int harga, int stok, String deskripsiProduk) {
+    private String imageUrl;
+
+    public produk(String nama, int harga, int stok, String deskripsiProduk, String imageUrl) {
         this.nama = nama;
         this.harga = harga;
         this.stok = stok;
         this.deskripsi_produk = deskripsiProduk;
+        this.imageUrl = imageUrl;
     }
 
     public String getNama() {
@@ -46,12 +48,12 @@ public class produk {
         this.deskripsi_produk = deskripsi_produk;
     }
 
-    public String getDeskripsi() {
-        return deskripsi;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setDeskripsi(String deskripsi) {
-        this.deskripsi = deskripsi;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
 

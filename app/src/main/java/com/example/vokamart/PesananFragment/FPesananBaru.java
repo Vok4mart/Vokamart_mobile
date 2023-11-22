@@ -26,7 +26,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-// ... (your imports)
 
 public class FPesananBaru extends Fragment {
     private PesananBaru adapter;

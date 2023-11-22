@@ -44,6 +44,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.navigation:navigation-fragment:2.7.5")
     implementation("androidx.navigation:navigation-ui:2.7.5")
+    implementation("com.github.bumptech.glide:glide:5.0.0-rc01")
     testImplementation("junit:junit:4.13.2")
     implementation ("androidx.viewpager2:viewpager2:1.0.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

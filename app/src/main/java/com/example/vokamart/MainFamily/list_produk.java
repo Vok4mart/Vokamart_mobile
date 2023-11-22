@@ -48,11 +48,15 @@ public class list_produk extends Fragment {
 
         produkArrayList = new ArrayList<>();
 
-        if (getContext() != null) {
+        if (isAdded() && getContext() != null) {
             requestQueue = Volley.newRequestQueue(getContext());
-            parseJSON(); // Panggil method parseJSON jika konteks tidak null
+            // Inisialisasi adapter hanya satu kali pada saat inisialisasi
+            adapter = new ProductAdapter(getContext(), produkArrayList);
+            recyclerView.setAdapter(adapter);
+
+            parseJSON();
         } else {
-            Toast.makeText(getContext(), "Konteks null", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Konteks null atau fragmen tidak terkait dengan aktivitas", Toast.LENGTH_SHORT).show();
         }
 
         ImageView imageView = rootView.findViewById(R.id.plus);
@@ -69,56 +73,65 @@ public class list_produk extends Fragment {
     }
 
     private void parseJSON() {
-        String url = "https://vok4mart.000webhostapp.com/TestApiProduct.php";
+        try {
+            if (getContext() != null) {
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("nama_file", Context.MODE_PRIVATE);
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            if (response != null) {
-                                adapter = new ProductAdapter(getContext(), produkArrayList);
-                                recyclerView.setAdapter(adapter);
-                                JSONArray jsonArray = response.getJSONArray("result");
+                String url = "https://vok4mart.000webhostapp.com/TestApiProduct.php";
 
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject hit = jsonArray.getJSONObject(i);
+                JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                try {
+                                    if (response != null) {
+                                        JSONArray jsonArray = response.getJSONArray("result");
 
-                                    String nama = hit.getString("Nama_produk");
-                                    int harga = hit.getInt("Harga_produk");
-                                    int stok = hit.getInt("berat");
-                                    String deskripsiProduk = hit.getString("deskripsi_produk");
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject hit = jsonArray.getJSONObject(i);
 
-                                    produkArrayList.add(new produk(nama, harga, stok, deskripsiProduk));
+                                            String nama = hit.getString("Nama_produk");
+                                            int harga = hit.getInt("Harga_produk");
+                                            int stok = hit.getInt("berat");
+                                            String deskripsiProduk = hit.getString("deskripsi_produk");
+                                            String imageUrl = hit.getString("gbr_produk");
+
+                                            produkArrayList.add(new produk(nama, harga, stok, deskripsiProduk, imageUrl));
+                                        }
+
+                                        // Setelah mendapatkan data, panggil notifyDataSetChanged() pada adapter
+                                        adapter.notifyDataSetChanged();
+
+                                        // Simpan data terakhir dari loop
+                                        if (!produkArrayList.isEmpty()) {
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putString("nama_produk", produkArrayList.get(produkArrayList.size() - 1).getNama());
+                                            editor.putInt("harga_produk", produkArrayList.get(produkArrayList.size() - 1).getHarga());
+                                            editor.putInt("berat", produkArrayList.get(produkArrayList.size() - 1).getStok());
+                                            editor.putString("deskripsi_produk", produkArrayList.get(produkArrayList.size() - 1).getDeskripsi_produk());
+                                            editor.apply();
+                                        }
+                                    } else {
+                                        // Penanganan respons null
+                                        Toast.makeText(getContext(), "Respons null", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-
-                                adapter = new ProductAdapter(getContext(), produkArrayList);
-                                recyclerView.setAdapter(adapter);
-
-                                // Simpan data terakhir dari loop
-                                if (!produkArrayList.isEmpty()) {
-                                    SharedPreferences preferences = getContext().getSharedPreferences("detail", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = preferences.edit();
-                                    editor.putString("nama_produk", produkArrayList.get(produkArrayList.size() - 1).getNama());
-                                    editor.putInt("harga_produk", produkArrayList.get(produkArrayList.size() - 1).getHarga());
-                                    editor.putInt("berat", produkArrayList.get(produkArrayList.size() - 1).getStok());
-                                    editor.putString("deskripsi_produk", produkArrayList.get(produkArrayList.size() - 1).getDeskripsi());
-                                    editor.apply();
-                                }
-                            } else {
-                                // Penanganan respons null
-                                Toast.makeText(getContext(), "Respons null", Toast.LENGTH_SHORT).show();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+                });
+                requestQueue.add(request);
+            } else {
+                Toast.makeText(getContext(), "Konteks null", Toast.LENGTH_SHORT).show();
             }
-        });
-        requestQueue.add(request);
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Kesalahan: Konteks null saat pemanggilan getSharedPreferences()", Toast.LENGTH_SHORT).show();
+        }
     }
 }
