@@ -3,6 +3,8 @@ package com.example.vokamart.MainFamily;
 import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -32,6 +34,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class tambah_produk extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -43,6 +47,8 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
     private int currentImageIndex = 0;
     private static final int MAX_IMAGES = 5;
     private static final int PICK_IMAGE_REQUEST = 1;
+    private Set<String> selectedImageUris = new HashSet<>();
+
 
 
 
@@ -188,14 +194,25 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
 
     private void handleImageSelection(android.net.Uri imageUri) {
         try {
-            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+            // Check if the image is already selected
+            String uriString = imageUri.toString();
+            if (!selectedImageUris.contains(uriString)) {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
 
-            // Set the selected image to the current ImageView
-            if (currentImageIndex < MAX_IMAGES) {
-                imageViews[currentImageIndex].setImageBitmap(bitmap);
-                currentImageIndex++;
+                // Set the selected image to the current ImageView
+                if (currentImageIndex < MAX_IMAGES) {
+                    imageViews[currentImageIndex].setImageBitmap(bitmap);
+
+                    // Add the URI to the set of selected image URIs
+                    selectedImageUris.add(uriString);
+                    imageViews[currentImageIndex].setTag(uriString); // Tag the ImageView with the URI
+
+                    currentImageIndex++;
+                } else {
+                    Toast.makeText(this, "You can select up to " + MAX_IMAGES + " images", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(this, "You can select up to " + MAX_IMAGES + " images", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Image already selected", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -205,9 +222,9 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
 
     private void clearImageView(int index) {
         if (index >= 0 && index < imageViews.length) {
-            imageViews[index].setImageBitmap(null);
-            // If you also want to reset the currentImageIndex when clearing an image:
-            // currentImageIndex = index;
+            // Load and set the default picture
+            imageViews[index].setImageResource(R.drawable.baseline_image_24); // Replace with your default image resource
+            imageViews[index].setTag(null); // Remove the tag
         }
     }
 
@@ -215,12 +232,44 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Assume you want to cancel the last selected image
-                if (currentImageIndex > 0) {
-                    currentImageIndex--;
-                    clearImageView(currentImageIndex);
+                // Reset currentImageIndex to indicate no image is selected
+                currentImageIndex = 0;
+
+                // Clear all ImageViews
+                for(ImageView imageView : imageViews) {
+                    imageView.setImageResource(R.drawable.baseline_image_24);
                 }
+
+                // Clear the set of selected image URIs
+                selectedImageUris.clear();
+
             }
         });
+    }
+
+    private void cancelImageAtIndex(int index) {
+        if (index >= 0 && index < imageViews.length) {
+            clearImageView(index);
+
+            // Remove the URI from the set of selected image URIs
+            String uriString = getSelectedUriAtIndex(index);
+            if (uriString != null) {
+                selectedImageUris.remove(uriString);
+            }
+        }
+    }
+
+
+    private String getSelectedUriAtIndex(int index) {
+        if (index >= 0 && index < imageViews.length) {
+            ImageView imageView = imageViews[index];
+
+            // Retrieve the URI from the tag
+            Object tag = imageView.getTag();
+            if (tag instanceof String) {
+                return (String) tag;
+            }
+        }
+        return null;
     }
 }
