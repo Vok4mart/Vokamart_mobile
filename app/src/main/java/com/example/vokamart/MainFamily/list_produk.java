@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class list_produk extends Fragment {
     private ProductAdapter adapter;
@@ -36,10 +38,13 @@ public class list_produk extends Fragment {
     private RecyclerView recyclerView;
     private RequestQueue requestQueue;
     private View rootView;
+    private SearchView searchView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_main_list_produk, container, false);
+
+        searchView = rootView.findViewById(R.id.cari);
 
         recyclerView = rootView.findViewById(R.id.recycler_list_produk);
         recyclerView.setHasFixedSize(true);
@@ -59,6 +64,19 @@ public class list_produk extends Fragment {
             Toast.makeText(getContext(), "Konteks null atau fragmen tidak terkait dengan aktivitas", Toast.LENGTH_SHORT).show();
         }
 
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterlist(newText);
+                return true;
+            }
+        });
+
         ImageView imageView = rootView.findViewById(R.id.plus);
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -72,12 +90,22 @@ public class list_produk extends Fragment {
         return rootView;
     }
 
+    private void filterlist(String newText) {
+        List<produk> filteredList = new ArrayList<>();
+        for (produk item : produkArrayList){
+            if (item.getNama().toLowerCase().contains(newText.toLowerCase())){
+                filteredList.add(item);
+            }
+        }
+        adapter.filterlist(filteredList);
+    }
+
     private void parseJSON() {
         try {
             if (getContext() != null) {
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("nama_file", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences("detail", Context.MODE_PRIVATE);
 
-                String url = "https://vok4mart.000webhostapp.com/TestApiProduct.php";
+                String url = "https://vok4mart.000webhostapp.com/ListProductApi.php";
 
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                         new Response.Listener<JSONObject>() {
@@ -92,7 +120,7 @@ public class list_produk extends Fragment {
 
                                             String nama = hit.getString("Nama_produk");
                                             int harga = hit.getInt("Harga_produk");
-                                            int stok = hit.getInt("berat");
+                                            int stok = hit.getInt("stok");
                                             String deskripsiProduk = hit.getString("deskripsi_produk");
                                             String imageUrl = hit.getString("gbr_produk");
 

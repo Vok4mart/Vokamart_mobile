@@ -15,6 +15,7 @@ import com.example.vokamart.DetailActivity.DetailProduk;
 import com.example.vokamart.Models.produk;
 import com.example.vokamart.R;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     private static ArrayList<produk> produkArrayList;
@@ -38,12 +39,25 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.ProductName.setText(product.getNama());
         holder.ProductPrice.setText("Price: " + product.getHarga());
         holder.ProductStock.setText("Stock: " + product.getStok());
-        Glide.with(holder.itemView.getContext()).load(product.getImageUrl()).into(holder.imageProduct);
+        // Pastikan gambar tidak null sebelum digunakan
+        if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
+            Glide.with(holder.itemView.getContext())
+                    .load(product.getImageUrl())
+                    .into(holder.imageProduct);
+        } else {
+            // Atau tampilkan gambar default jika URL kosong atau null
+            holder.imageProduct.setImageResource(R.drawable.baseline_fastfood_24);
+        }
     }
 
     @Override
     public int getItemCount() {
         return produkArrayList.size();
+    }
+
+    public void filterlist(List<produk> filteredList){
+        produkArrayList = (ArrayList<produk>) filteredList;
+        notifyDataSetChanged();
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
