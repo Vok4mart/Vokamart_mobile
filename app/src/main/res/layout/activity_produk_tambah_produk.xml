@@ -64,6 +64,7 @@
 
 
             <HorizontalScrollView
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none">
@@ -73,29 +74,34 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
+                        android:id="@+id/img1"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:src="@drawable/baseline_image_24"/>
 
                     <ImageView
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginStart="10dp"
-                        android:src="@drawable/baseline_image_24"/>
-
-                    <ImageView
+                        android:id="@+id/img2"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginStart="10dp"
                         android:src="@drawable/baseline_image_24"/>
 
                     <ImageView
+                        android:id="@+id/img3"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginStart="10dp"
                         android:src="@drawable/baseline_image_24"/>
 
                     <ImageView
+                        android:id="@+id/img4"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/baseline_image_24"/>
+
+                    <ImageView
+                        android:id="@+id/img5"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_marginStart="10dp"
@@ -104,15 +110,38 @@
 
             </HorizontalScrollView>
 
-            <Button
-                android:id="@+id/Btn_Pick"
+            <LinearLayout
                 android:layout_marginTop="5dp"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_primary"
-                android:fontFamily="@font/lexendbold"
-                android:text="Tambah Foto"
-                android:textColor="@color/white"/>
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/Btn_Pick"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_primary"
+                    android:fontFamily="@font/lexendbold"
+                    android:text="Tambah Foto"
+                    android:textColor="@color/white"
+                    android:textSize="11dp"/>
+
+                <Button
+                    android:layout_marginStart="20dp"
+                    android:id="@+id/Btn_Cancel"
+                    android:layout_marginTop="5dp"
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_primary"
+                    android:fontFamily="@font/lexendbold"
+                    android:text="Batalkan"
+                    android:textColor="@color/white"
+                    android:textSize="11dp"/>
+
+            </LinearLayout>
+
+
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
