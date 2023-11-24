@@ -51,4 +51,9 @@ dependencies {
     implementation("androidx.activity:activity:1.8.1")
     implementation("com.android.volley:volley:1.2.1")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation("pub.devrel:easypermission:3.0.0")
+    implementation("com.droidninja:filepicker:2.2.5")
+    implementation("com.github.bumptech.glide:glide:4.13.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines")
 }

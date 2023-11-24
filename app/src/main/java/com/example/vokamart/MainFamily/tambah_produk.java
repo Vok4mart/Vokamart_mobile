@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.SpinnerAdapter;
+import com.example.vokamart.Manifest;
 import com.example.vokamart.Models.kategoriList;
 import com.example.vokamart.R;
 
@@ -31,6 +33,8 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
 
     private ArrayList<kategoriList> kategoriList;
     private SpinnerAdapter adapter;
+    Button btPick;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +44,12 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
         kategoriList = new ArrayList<>();
         Spinner spinner = findViewById(R.id.spinner_kategori);
         adapter = new SpinnerAdapter(this, kategoriList);
-
         TextView textView = findViewById(R.id.text_tambah_variasi);
 
-        fetchDataFromServer();
+        btPick = findViewById(R.id.Btn_Pick);
 
+
+        fetchDataFromServer();
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this); // Set the listener for item selection
 
@@ -54,6 +59,14 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
                 // Handle click on the TextView if needed
             }
         });
+    }
+
+    private void pickImage() {
+
+        btPick.setOnClickListener(view ->{
+
+        });
+
     }
 
     private void fetchDataFromServer() {
