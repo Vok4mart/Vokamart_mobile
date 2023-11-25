@@ -1,49 +1,61 @@
 package com.example.vokamart.DetailActivity;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.example.vokamart.Models.produk;
 import com.example.vokamart.R;
+
+import java.util.ArrayList;
 
 public class DetailProduk extends AppCompatActivity {
     TextView nama, stok, harga, Deskripsi;
+    private produk Produk;
+    Intent intent;
     private SharedPreferences preferences;
+    private ArrayList<produk> produkArrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produk_detail_produk);
 
-        Intent intent = getIntent();
-//        String nama = intent.getStringExtra("ProductName");
-
-        initdetailproduk();
-
-        return ;
-    }
-
-    private void initdetailproduk() {
         nama = findViewById(R.id.Detail_nama_produk);
         stok = findViewById(R.id.Detail_produk_stok);
         harga = findViewById(R.id.Detail_produk_harga);
         Deskripsi = findViewById(R.id.Detail_produk_deskripsi);
+        intent = getIntent();
 
+        if (intent != null){
+            Produk = (produk) intent.getSerializableExtra("data") ;
+            String namaProduk = Produk.getNama();
+            nama.setText(namaProduk);
+        }
+        initdetailproduk();
+    }
+
+    private void initdetailproduk() {
         preferences = getApplicationContext().getSharedPreferences("detail", Context.MODE_PRIVATE);
 
-        String nameProduk = preferences.getString("nama_produk", "-");
-        nama.setText((nameProduk));
+        int indexToShow = getIntent().getIntExtra("indexToShow", -1);
 
-        String deskripsiProduk = preferences.getString("deskripsi_produk", "-");
-        Deskripsi.setText((deskripsiProduk));
+        if (indexToShow != -1 && indexToShow < produkArrayList.size()) {
+            produk selectedProduk = produkArrayList.get(indexToShow);
 
-        int hargaProduk = preferences.getInt("harga_produk", Integer.parseInt("-1"));
-        harga.setText(String.valueOf(hargaProduk));
+            String nameProduk = selectedProduk.getNama();
+            nama.setText(nameProduk);
 
-        int beratProduk = preferences.getInt("berat", Integer.parseInt("-1"));
-        stok.setText(String.valueOf(beratProduk));
+            String deskripsiProduk = selectedProduk.getDeskripsi_produk();
+            Deskripsi.setText(deskripsiProduk);
+
+            int hargaProduk = selectedProduk.getHarga();
+            harga.setText(String.valueOf(hargaProduk));
+
+            int beratProduk = selectedProduk.getStok();
+            stok.setText(String.valueOf(beratProduk));
     }
+}
 }

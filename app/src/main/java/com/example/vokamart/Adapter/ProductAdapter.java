@@ -20,10 +20,17 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
     private static ArrayList<produk> produkArrayList;
     private static Context context;
+    public ClickListener clickListener;
 
-    public ProductAdapter(Context context, ArrayList<produk> produkArrayList) {
+
+    public interface ClickListener{
+        void clicked(produk produk);
+    }
+
+    public ProductAdapter(Context context, ArrayList<produk> produkArrayList, ClickListener clickListener) {
         this.produkArrayList = produkArrayList;
         this.context = context;
+        this.clickListener = clickListener;
     }
 
     @Override
@@ -39,15 +46,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.ProductName.setText(product.getNama());
         holder.ProductPrice.setText("Price: " + product.getHarga());
         holder.ProductStock.setText("Stock: " + product.getStok());
-        // Pastikan gambar tidak null sebelum digunakan
-        if (product.getImageUrl() != null && !product.getImageUrl().isEmpty()) {
-            Glide.with(holder.itemView.getContext())
-                    .load(product.getImageUrl())
-                    .into(holder.imageProduct);
-        } else {
-            // Atau tampilkan gambar default jika URL kosong atau null
-            holder.imageProduct.setImageResource(R.drawable.baseline_fastfood_24);
-        }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.clicked(product);
+            }
+        });
     }
 
     @Override
@@ -60,7 +65,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         notifyDataSetChanged();
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView ProductName;
         TextView ProductPrice;
         TextView ProductStock;
@@ -73,17 +78,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             ProductPrice = itemView.findViewById(R.id.harga_produk);
             ProductStock = itemView.findViewById(R.id.stok_produk);
             imageProduct = itemView.findViewById(R.id.gambar_produk);
-
-            itemView.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View v) {
-            int position = getAdapterPosition();
-            Intent intent = new Intent(context, DetailProduk.class);
-            intent.putExtra("ProductName", produkArrayList.get(position).getNama());
-            context.startActivity(intent);
-
         }
     }
 }

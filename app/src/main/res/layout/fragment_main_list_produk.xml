@@ -71,16 +71,6 @@
             app:queryHint="Pencarian"
             android:fontFamily="@font/lexendregular"
             android:textSize="15sp"/>
-
-        <Button
-            android:id="@+id/filter"
-            android:layout_width="100dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_primary"
-            android:fontFamily="@font/lexendsemibold"
-            android:text="@string/filter"
-            android:textColor="@color/white" />
     </LinearLayout>
     <View
         android:id="@+id/view_garis_bawah_filter"
@@ -88,7 +78,7 @@
         android:layout_height="3dp"
         android:background="@color/GreyText"
         android:layout_below="@id/cariframe"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="20dp"/>
 
     <LinearLayout
         android:layout_below="@id/view_garis_bawah_filter"

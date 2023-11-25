@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.ProductAdapter;
+import com.example.vokamart.DetailActivity.DetailProduk;
 import com.example.vokamart.Models.produk;
 import com.example.vokamart.R;
 
@@ -32,7 +33,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class list_produk extends Fragment {
+public class list_produk extends Fragment implements ProductAdapter.ClickListener {
     private ProductAdapter adapter;
     private ArrayList<produk> produkArrayList;
     private RecyclerView recyclerView;
@@ -56,7 +57,7 @@ public class list_produk extends Fragment {
         if (isAdded() && getContext() != null) {
             requestQueue = Volley.newRequestQueue(getContext());
             // Inisialisasi adapter hanya satu kali pada saat inisialisasi
-            adapter = new ProductAdapter(getContext(), produkArrayList);
+            adapter = new ProductAdapter(getContext(), produkArrayList, this::clicked);
             recyclerView.setAdapter(adapter);
 
             parseJSON();
@@ -132,11 +133,14 @@ public class list_produk extends Fragment {
 
                                         // Simpan data terakhir dari loop
                                         if (!produkArrayList.isEmpty()) {
+                                            int lastIndex = produkArrayList.size() - 1;
+                                            produk lastProduk = produkArrayList.get(lastIndex);
+
                                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                                            editor.putString("nama_produk", produkArrayList.get(produkArrayList.size() - 1).getNama());
-                                            editor.putInt("harga_produk", produkArrayList.get(produkArrayList.size() - 1).getHarga());
-                                            editor.putInt("berat", produkArrayList.get(produkArrayList.size() - 1).getStok());
-                                            editor.putString("deskripsi_produk", produkArrayList.get(produkArrayList.size() - 1).getDeskripsi_produk());
+                                            editor.putString("nama_produk", lastProduk.getNama());
+                                            editor.putInt("harga_produk", lastProduk.getHarga());
+                                            editor.putInt("berat", lastProduk.getStok());
+                                            editor.putString("deskripsi_produk", lastProduk.getDeskripsi_produk());
                                             editor.apply();
                                         }
                                     } else {
@@ -161,5 +165,12 @@ public class list_produk extends Fragment {
             e.printStackTrace();
             Toast.makeText(getContext(), "Kesalahan: Konteks null saat pemanggilan getSharedPreferences()", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void clicked(produk produk) {
+        Intent intent = new Intent(getActivity(), DetailProduk.class);
+        intent.putExtra("data", produk);
+        startActivity(intent);
     }
 }

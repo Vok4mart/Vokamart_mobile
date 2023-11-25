@@ -1,6 +1,8 @@
 package com.example.vokamart.Models;
 
-public class produk {
+import java.io.Serializable;
+
+public class produk implements Serializable {
     private String nama;
     private int harga;
     private int stok;
@@ -56,4 +58,3 @@ public class produk {
         this.imageUrl = imageUrl;
     }
 }
-

@@ -79,7 +79,6 @@
         android:layout_centerHorizontal="true"
         app:cardCornerRadius="10dp"
         app:cardBackgroundColor="@color/RedAccent">
-
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
@@ -200,7 +199,6 @@
             android:layout_marginStart="180sp"
             android:fontFamily="@font/lexendbold"
             android:textColor="@color/RedPrimary"/>
-
     </LinearLayout>
 
 </RelativeLayout>
