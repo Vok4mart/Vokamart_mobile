@@ -58,49 +58,49 @@ public class FPesananBaru extends Fragment {
     }
 
     private void parseJSON() {
-        String url = "https://vok4mart.000webhostapp.com/PesananBaru2.php";
+        String url = "https://vok4mart.000webhostapp.com/test2.php";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            JSONObject dataObject = response.getJSONObject("data");
+                            // Clear existing data in pesananArrayList
+                            pesananArrayList.clear();
 
                             // Parse pesanan data
-                            JSONArray pesananArray = dataObject.getJSONArray("pesanan");
-                            JSONObject pesananObject = pesananArray.getJSONObject(0);
-                            int totalHarga = pesananObject.getInt("total_harga");
-                            String statusPesanan = pesananObject.getString("status_pesanan");
+                            if (response != null) {
+                                JSONArray jsonArray = response.getJSONArray("data");
 
-                            // Parse produk data
-                            JSONArray produkArray = dataObject.getJSONArray("produk");
-                            JSONObject produkObject = produkArray.getJSONObject(0);
-                            String namaProduk = produkObject.getString("Nama_produk");
-                            // You can add more fields as needed
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject hit = jsonArray.getJSONObject(i);
 
-                            // Parse alamat user data
-                            JSONArray alamatArray = dataObject.getJSONArray("alamat_user");
-                            JSONObject alamatObject = alamatArray.getJSONObject(0);
-                            String alamatLengkap = alamatObject.getString("alamat_lengkap");
-                            // You can add more fields as needed
+                                    String namaProduk = hit.getString("Nama_produk");
+                                    String alamatLengkap = hit.getString("alamat_lengkap"); // Ganti dengan nama kolom yang sesuai
+                                    int totalHarga = hit.getInt("sub_total");
+                                    // You can add more fields as needed
 
-                            // Create and add data to pesananArrayList
-                            pesananArrayList.add(new MPesananBaru(namaProduk, alamatLengkap, totalHarga));
+                                    // Create and add data to pesananArrayList
+                                    pesananArrayList.add(new MPesananBaru(namaProduk, alamatLengkap, totalHarga));
+                                }
 
-                            // Notify the adapter that the data has changed
-                            adapter.notifyDataSetChanged();
-
+                                // Notify the adapter that the data has changed
+                                adapter.notifyDataSetChanged();
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            // Handle JSON parsing error here
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 error.printStackTrace();
+                // Handle Volley error here
             }
         });
+
+        // Add the request to the requestQueue
         requestQueue.add(request);
     }
 }
