@@ -175,30 +175,34 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/Linear_varian"
+        android:id="@+id/Btn_linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/linear_deskripsi"
         android:layout_marginTop="20dp"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/lexendbold"
-            android:text="Varian"
-            android:textColor="@color/black"
-            android:textSize="18sp"/>
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="55dp"
+            android:text="Edit"
+            android:fontFamily="@font/lexendbold"/>
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="160dp"
             android:layout_height="wrap_content"
-            android:text="ubah"
-            android:layout_marginStart="180sp"
+            android:text="Hapus"
             android:fontFamily="@font/lexendbold"
-            android:textColor="@color/RedPrimary"/>
+            android:background="@drawable/button_primary"
+            android:textColor="@color/white"
+            android:layout_marginStart="15dp"/>
+
+
     </LinearLayout>
+
+
 
 </RelativeLayout>

@@ -38,7 +38,7 @@
         android:background="@color/GreyText"
         android:layout_below="@id/header_pesanan"/>
 
-    <EditText
+    <androidx.appcompat.widget.SearchView
         android:layout_below="@id/view_garis_pesanan"
         android:layout_marginTop="10dp"
         android:id="@+id/cari_pesanan"
@@ -91,10 +91,6 @@
                 android:layout_height="wrap_content"
                 android:text="Selesai"/>
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:text="Dikomplain"/>
 
         </com.google.android.material.tabs.TabLayout>
 

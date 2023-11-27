@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10sp"
                 android:layout_marginTop="35sp"
-                android:text="@string/tambah_produk"
+                android:text="Edit Produk"
                 android:fontFamily="@font/lexendbold"
                 android:textSize="20sp"/>
         </LinearLayout>
@@ -250,7 +250,12 @@
 
         </LinearLayout>
 
-      
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/frame_form"/>
 
         <RelativeLayout
             android:layout_marginTop="15dp"
@@ -265,7 +270,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_primary"
-                android:text="Tambah"
+                android:text="Ubah"
                 android:fontFamily="@font/lexendbold"
                 android:textColor="@color/white"/>
 
