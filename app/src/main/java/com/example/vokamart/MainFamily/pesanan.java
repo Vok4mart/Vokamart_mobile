@@ -1,6 +1,8 @@
 package com.example.vokamart.MainFamily;
 
 import android.os.Bundle;
+
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +20,7 @@ public class pesanan extends Fragment {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private ViewPageAdapter adapter;
-
-
+    private SearchView searchView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,6 +53,18 @@ public class pesanan extends Fragment {
                     break;
             }
         }).attach();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return true;
+            }
+        });
 
         return view;
     }

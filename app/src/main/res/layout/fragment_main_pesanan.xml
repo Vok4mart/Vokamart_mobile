@@ -38,7 +38,7 @@
         android:background="@color/GreyText"
         android:layout_below="@id/header_pesanan"/>
 
-    <EditText
+    <androidx.appcompat.widget.SearchView
         android:layout_below="@id/view_garis_pesanan"
         android:layout_marginTop="10dp"
         android:id="@+id/cari_pesanan"
@@ -49,9 +49,7 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/search_border"
         android:height="60dp"
-        android:inputType="text"
-        android:hint="  Pencarian"
-        android:autofillHints="name"
+        app:queryHint="pencarian"
         android:fontFamily="@font/lexendregular"
         android:textSize="15sp"
         android:paddingStart="8dp"/>
@@ -104,9 +102,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
-
-
 
 </RelativeLayout>

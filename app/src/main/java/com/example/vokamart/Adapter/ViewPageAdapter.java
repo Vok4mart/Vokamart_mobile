@@ -5,11 +5,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.example.vokamart.Models.MPesananBaru;
 import com.example.vokamart.PesananFragment.Dikirim;
 import com.example.vokamart.PesananFragment.Dikomplain;
 import com.example.vokamart.PesananFragment.FPesananBaru;
 import com.example.vokamart.PesananFragment.PerluDikirim;
 import com.example.vokamart.PesananFragment.Selesai;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewPageAdapter extends FragmentStateAdapter {
     private static final int NUM_TABS = 5;
@@ -41,4 +45,5 @@ public class ViewPageAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return NUM_TABS;
     }
+
 }
