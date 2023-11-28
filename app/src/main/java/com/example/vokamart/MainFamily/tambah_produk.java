@@ -287,67 +287,73 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
 
 
     private void adddata() {
-
-        JSONObject jsonRequest = new JSONObject();
+        String url = "https://vok4mart.000webhostapp.com/TambahProdukApi.php";
         try {
-            jsonRequest.put("nama_produk", etNama.getText().toString().trim());
-            jsonRequest.put("harga_produk", etHarga.getText().toString().trim());
-            jsonRequest.put("deskripsi_produk", etDeskripsi.getText().toString().trim()); // Add user name
-            jsonRequest.put("stok", etStok.getText().toString().trim());
-            jsonRequest.put("berat", etBerat.getText().toString().trim());
+            JSONObject jsonRequest = createJsonRequest();
 
-            kategoriList selectedItem = (kategoriList) spinner.getSelectedItem();
-            String idKategori = selectedItem.getId_kategori(); // Adjust based on your actual structure
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonRequest,
+                    response -> handleResponse(response),
+                    error -> handleError(error));
 
-            jsonRequest.put("id_kategori", idKategori);
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            requestQueue.add(request);
+
         } catch (JSONException e) {
             e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "JSON ERROR", Toast.LENGTH_SHORT).show();
         }
+    }
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, Constant.ADDPRDK, jsonRequest,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            int code = response.getInt("code");
-                            String status = response.getString("status");
+    private JSONObject createJsonRequest() throws JSONException {
+        JSONObject jsonRequest = new JSONObject();
+        jsonRequest.put("nama_produk", etNama.getText().toString().trim());
+        jsonRequest.put("harga_produk", etHarga.getText().toString().trim());
+        jsonRequest.put("deskripsi_produk", etDeskripsi.getText().toString().trim());
+        jsonRequest.put("stok", etStok.getText().toString().trim());
+        jsonRequest.put("berat", etBerat.getText().toString().trim());
 
-                            if (code == 201 && status.equals("Produk berhasil ditambahkan")) {
-                                // Registration successful
-                                Toast.makeText(getApplicationContext(), "Produk Ditambahkan", Toast.LENGTH_SHORT).show();
-                            } else if (code == 405 && status.equals("Gagal menambahkan produk")) {
-                                // User already registered
-                                Toast.makeText(getApplicationContext(), "Produk Gagal Ditambahkan", Toast.LENGTH_SHORT).show();
-                            } else {
-                                // Handle other status codes or errors
-                                Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "JSON ERROR", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                Log.e("AddDataError", "Volley Error: " + error.toString());
+        kategoriList selectedItem = (kategoriList) spinner.getSelectedItem();
+        String idKategori = selectedItem.getId_kategori();
+        jsonRequest.put("id_kategori", idKategori);
 
-                // Check if the response is a String
-                if (error.networkResponse != null && error.networkResponse.data != null) {
-                    String errorResponse = new String(error.networkResponse.data);
-                    Log.e("AddDataError", "Error response as String: " + errorResponse);
+        return jsonRequest;
+    }
 
-                    // Handle the error response as needed
-                    // For example, you can show an error message using Toast
-                    Toast.makeText(getApplicationContext(), "Error: " + errorResponse, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
-                }
+    private void handleResponse(JSONObject response) {
+        try {
+            int code = response.getInt("code");
+            String status = response.getString("status");
+
+            if (code == 201 && status.equals("Produk berhasil ditambahkan")) {
+                showToast("Produk Ditambahkan");
+            } else if (code == 405 && status.equals("Gagal menambahkan produk")) {
+                showToast("Produk Gagal Ditambahkan");
+            } else {
+                showToast(status);
             }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-        requestQueue.add(request);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(), "JSON ERROR", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    private void handleError(VolleyError error) {
+        error.printStackTrace();
+        Log.e("AddDataError", "Volley Error: " + error.toString());
+
+        if (error.networkResponse != null && error.networkResponse.data != null) {
+            String errorResponse = new String(error.networkResponse.data);
+            Log.e("AddDataError", "Error response as String: " + errorResponse);
+            showToast("Error: " + errorResponse);
+        } else {
+            // Handle other cases or show a generic error message
+        Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
+        }
     }
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+}
 
