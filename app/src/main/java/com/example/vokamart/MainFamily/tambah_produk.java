@@ -346,5 +346,8 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
                 }
             }
         });
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(request);
     }
-}
+    }
+
