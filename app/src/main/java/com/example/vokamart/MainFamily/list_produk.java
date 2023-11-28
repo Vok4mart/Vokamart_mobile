@@ -119,8 +119,8 @@ public class list_produk extends Fragment implements ProductAdapter.ClickListene
                                         for (int i = 0; i < jsonArray.length(); i++) {
                                             JSONObject hit = jsonArray.getJSONObject(i);
 
-                                            String nama = hit.getString("Nama_produk");
-                                            int harga = hit.getInt("Harga_produk");
+                                            String nama = hit.getString("nama_produk");
+                                            int harga = hit.getInt("harga_produk");
                                             int stok = hit.getInt("stok");
                                             String deskripsiProduk = hit.getString("deskripsi_produk");
                                             String imageUrl = hit.getString("gbr_produk");

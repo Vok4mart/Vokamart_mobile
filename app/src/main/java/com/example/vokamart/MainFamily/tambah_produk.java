@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.vokamart.API.Constant;
 import com.example.vokamart.Adapter.SpinnerAdapter;
 import com.example.vokamart.Models.kategoriList;
 import com.example.vokamart.R;
@@ -41,15 +43,15 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
 
     private ArrayList<kategoriList> kategoriList;
     private SpinnerAdapter adapter;
-    private Button btPick, btnCancel;
+    private Button btPick, btnCancel, btnTambah;
     private ImageView iv1, iv2, iv3, iv4, iv5;
     private ImageView[] imageViews;
     private int currentImageIndex = 0;
     private static final int MAX_IMAGES = 5;
     private static final int PICK_IMAGE_REQUEST = 1;
     private Set<String> selectedImageUris = new HashSet<>();
-
-
+    private Spinner spinner;
+    private EditText etNama, etStok, etHarga, etBerat, etDeskripsi;
 
 
     @Override
@@ -58,16 +60,23 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_produk_tambah_produk);
 
         kategoriList = new ArrayList<>();
-        Spinner spinner = findViewById(R.id.spinner_kategori);
-        TextView textView = findViewById(R.id.text_tambah_variasi);
+        spinner = findViewById(R.id.spinner_kategori);
         btPick = findViewById(R.id.Btn_Pick);
         btnCancel = findViewById(R.id.Btn_Cancel);
+        btnTambah = findViewById(R.id.btn_tambah_produk);
         iv1 = findViewById(R.id.img1);
         iv2 = findViewById(R.id.img2);
         iv3 = findViewById(R.id.img3);
         iv4 = findViewById(R.id.img4);
         iv5 = findViewById(R.id.img5);
         imageViews = new ImageView[]{iv1, iv2, iv3, iv4, iv5};
+
+        etBerat = findViewById(R.id.edit_berat);
+        etDeskripsi = findViewById(R.id.edit_deskripsi);
+        etHarga = findViewById(R.id.edit_harga_produk);
+        etNama = findViewById(R.id.edit_nama_produk);
+        etStok = findViewById(R.id.edit_stok);
+
 
         adapter = new SpinnerAdapter(this, kategoriList);
 
@@ -77,13 +86,16 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
 
         pickImage();
 
-        textView.setOnClickListener(new View.OnClickListener() {
+        btnTambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Handle click on the TextView if needed
+                adddata();
             }
         });
+
+
     }
+
 
     private void pickImage() {
 
@@ -236,7 +248,7 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
                 currentImageIndex = 0;
 
                 // Clear all ImageViews
-                for(ImageView imageView : imageViews) {
+                for (ImageView imageView : imageViews) {
                     imageView.setImageResource(R.drawable.baseline_image_24);
                 }
 
@@ -271,5 +283,68 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
             }
         }
         return null;
+    }
+
+
+    private void adddata() {
+
+        JSONObject jsonRequest = new JSONObject();
+        try {
+            jsonRequest.put("nama_produk", etNama.getText().toString().trim());
+            jsonRequest.put("harga_produk", etHarga.getText().toString().trim());
+            jsonRequest.put("deskripsi_produk", etDeskripsi.getText().toString().trim()); // Add user name
+            jsonRequest.put("stok", etStok.getText().toString().trim());
+            jsonRequest.put("berat", etBerat.getText().toString().trim());
+
+            kategoriList selectedItem = (kategoriList) spinner.getSelectedItem();
+            String idKategori = selectedItem.getId_kategori(); // Adjust based on your actual structure
+
+            jsonRequest.put("id_kategori", idKategori);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, Constant.ADDPRDK, jsonRequest,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            int code = response.getInt("code");
+                            String status = response.getString("status");
+
+                            if (code == 201 && status.equals("Produk berhasil ditambahkan")) {
+                                // Registration successful
+                                Toast.makeText(getApplicationContext(), "Produk Ditambahkan", Toast.LENGTH_SHORT).show();
+                            } else if (code == 405 && status.equals("Gagal menambahkan produk")) {
+                                // User already registered
+                                Toast.makeText(getApplicationContext(), "Produk Gagal Ditambahkan", Toast.LENGTH_SHORT).show();
+                            } else {
+                                // Handle other status codes or errors
+                                Toast.makeText(getApplicationContext(), status, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "JSON ERROR", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Log.e("AddDataError", "Volley Error: " + error.toString());
+
+                // Check if the response is a String
+                if (error.networkResponse != null && error.networkResponse.data != null) {
+                    String errorResponse = new String(error.networkResponse.data);
+                    Log.e("AddDataError", "Error response as String: " + errorResponse);
+
+                    // Handle the error response as needed
+                    // For example, you can show an error message using Toast
+                    Toast.makeText(getApplicationContext(), "Error: " + errorResponse, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

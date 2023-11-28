@@ -48,7 +48,6 @@ public class Register extends AppCompatActivity {
         TextView text3 = findViewById(R.id.text_disini_register);
 
 
-
         text3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
