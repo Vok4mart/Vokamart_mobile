@@ -15,8 +15,6 @@ public class DetailProduk extends AppCompatActivity {
     TextView nama, stok, harga, Deskripsi;
     private produk Produk;
     Intent intent;
-    private SharedPreferences preferences;
-    private ArrayList<produk> produkArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
