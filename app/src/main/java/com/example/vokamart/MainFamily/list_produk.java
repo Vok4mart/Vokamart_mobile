@@ -166,7 +166,6 @@ public class list_produk extends Fragment implements ProductAdapter.ClickListene
             Toast.makeText(getContext(), "Kesalahan: Konteks null saat pemanggilan getSharedPreferences()", Toast.LENGTH_SHORT).show();
         }
     }
-
     @Override
     public void clicked(produk produk) {
         Intent intent = new Intent(getActivity(), DetailProduk.class);
