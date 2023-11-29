@@ -128,7 +128,8 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
                             for (int i = 0; i < kategoriArray.length(); i++) {
                                 JSONObject jsonObject = kategoriArray.getJSONObject(i);
                                 String name = jsonObject.getString("nama_kategori");
-                                kategoriList dataModel = new kategoriList(name);
+                                String id = jsonObject.getString("id_kategori");
+                                kategoriList dataModel = new kategoriList(name, id);
                                 kategoriList.add(dataModel);
                             }
 
@@ -163,8 +164,9 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
         // Handle item selection if needed
         kategoriList selectedCategory = (kategoriList) parent.getItemAtPosition(position);
         if (selectedCategory != null) {
+            String categoryId = selectedCategory.getId_kategori();
             String categoryName = selectedCategory.getNama_kategori();
-            Log.d("ItemSelected", "Category selected: " + categoryName);
+            Log.d("ItemSelected", "Category selected: " + categoryId);
             // Perform any actions based on the selected category
             Toast.makeText(tambah_produk.this, "Category selected: " + categoryName, Toast.LENGTH_SHORT).show();
         }
@@ -292,8 +294,8 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
             JSONObject jsonRequest = createJsonRequest();
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonRequest,
-                    response -> handleResponse(response),
-                    error -> handleError(error));
+                    this::handleResponse,
+                    this::handleError);
 
             RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
             requestQueue.add(request);
