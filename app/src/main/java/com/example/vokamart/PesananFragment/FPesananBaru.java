@@ -58,7 +58,7 @@ public class FPesananBaru extends Fragment {
     }
 
     private void parseJSON() {
-        String url = "https://vok4mart.000webhostapp.com/test2.php";
+        String url = "https://vok4mart.000webhostapp.com/ApiPesananBaru.php";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {

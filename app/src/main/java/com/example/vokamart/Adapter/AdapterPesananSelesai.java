@@ -1,5 +1,6 @@
 package com.example.vokamart.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,7 @@ public class AdapterPesananSelesai extends RecyclerView.Adapter<AdapterPesananSe
 
     private final ArrayList<MSelesai> MSelesai;
 
-    public AdapterPesananSelesai(ArrayList<MSelesai> MSelesai) {
+    public AdapterPesananSelesai(ArrayList<MSelesai> MSelesai, Context context) {
         this.MSelesai = MSelesai;
     }
 

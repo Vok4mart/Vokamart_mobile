@@ -9,98 +9,105 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.vokamart.Adapter.AdapterPesananDikirim;
 import com.example.vokamart.Adapter.AdapterPesananSelesai;
 import com.example.vokamart.Models.MSelesai;
 import com.example.vokamart.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-///**
-// * A simple {@link Fragment} subclass.
-// * Use the {@link Selesai#newInstance} factory method to
-// * create an instance of this fragment.
-// */
+
 public class Selesai extends Fragment {
 
-//    // TODO: Rename parameter arguments, choose names that match
-//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-//
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-//
-//    public Selesai() {
-//        // Required empty public constructor
-//    }
-//
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment Selesai.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static Selesai newInstance(String param1, String param2) {
-//        Selesai fragment = new Selesai();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
-
-
-
     private AdapterPesananSelesai adapter;
-    private ArrayList<MSelesai> pesananArrayList;
+    private ArrayList<MSelesai> pesananSelesai;
+    private RecyclerView recyclerView;
+    private RequestQueue requestQueue;
+    private View rootView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_pesanan_selesai, container, false);
-        if (pesananArrayList == null) {
-            addData();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.fragment_pesanan_selesai, container, false);
+        recyclerView = rootView.findViewById(R.id.recycler_pesanan);
+
+        if (recyclerView != null) {
+            recyclerView.setHasFixedSize(true);
+            RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+            recyclerView.setLayoutManager(layoutManager);
+
+            pesananSelesai = new ArrayList<>();
+            adapter = new AdapterPesananSelesai(pesananSelesai, getContext());
+            recyclerView.setAdapter(adapter);
+
+            if (getContext() != null) {
+                requestQueue = Volley.newRequestQueue(getContext());
+                parseJSON();
+            } else {
+                Toast.makeText(getContext(), "Konteks null", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(getContext(), "RecyclerView is null", Toast.LENGTH_SHORT).show();
         }
-        View rootView = inflater.inflate(R.layout.fragment_pesanan_baru, container, false);
-
-        RecyclerView recyclerView = rootView.findViewById(R.id.recycler_pesanan);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-
-        if (adapter == null) {
-            adapter = new AdapterPesananSelesai(pesananArrayList);
-        }
-
-
-        // Set the adapter and layoutManager for the RecyclerView
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
 
         return rootView;
     }
 
-    private void addData() {
-        pesananArrayList = new ArrayList<>();
-        pesananArrayList.add(new MSelesai("Donat Kentang", "Banyuwangi", "JNT INDO",1333));
-        pesananArrayList.add(new MSelesai("Motherboard", "Bali", "Jnt Bali", 10000));
-        pesananArrayList.add(new MSelesai("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new MSelesai("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new MSelesai("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new MSelesai("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
-        pesananArrayList.add(new MSelesai("Sepatu la Tetanus", "aBanas", "asdfdfd", 89999));
+    private void parseJSON() {
+        String url = "https://vok4mart.000webhostapp.com/ApiPesananSelesai.php";
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            // Clear existing data in pesananArrayList
+                            pesananSelesai.clear();
+
+                            // Parse pesanan data
+                            if (response != null) {
+                                JSONArray jsonArray = response.getJSONArray("data");
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject hit = jsonArray.getJSONObject(i);
+
+                                    String namaProduk = hit.getString("Nama_produk");
+                                    String alamatLengkap = hit.getString("alamat_lengkap"); // Ganti dengan nama kolom yang sesuai
+                                    int totalHarga = hit.getInt("sub_total");
+                                    // You can add more fields as needed
+
+                                    // Create and add data to pesananArrayList
+                                    pesananSelesai.add(new MSelesai(namaProduk, alamatLengkap, totalHarga));
+                                }
+
+                                // Notify the adapter that the data has changed
+                                adapter.notifyDataSetChanged();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            // Handle JSON parsing error here
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                // Handle Volley error here
+            }
+        });
+
+        // Add the request to the requestQueue
+        requestQueue.add(request);
     }
-}
+    }

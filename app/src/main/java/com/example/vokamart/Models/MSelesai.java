@@ -5,7 +5,7 @@ public class MSelesai {
     private int harga_produk;
 
 
-    public MSelesai(String nama_produk, String alamat_lengkap, String kurir, int harga_produk){
+    public MSelesai(String nama_produk, String alamat_lengkap, int harga_produk){
         this.nama_produk = nama_produk;
         this.alamat_lengkap = alamat_lengkap;
         this.kurir = kurir;
