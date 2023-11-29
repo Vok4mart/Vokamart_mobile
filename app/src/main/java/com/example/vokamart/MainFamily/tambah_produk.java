@@ -321,15 +321,19 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
 
     private void handleResponse(JSONObject response) {
         try {
-            int code = response.getInt("code");
-            String status = response.getString("status");
+            if (response != null && response.length() > 0) {
+                int code = response.getInt("code");
+                String status = response.getString("status");
 
-            if (code == 201 && status.equals("Produk berhasil ditambahkan")) {
-                showToast("Produk Ditambahkan");
-            } else if (code == 405 && status.equals("Gagal menambahkan produk")) {
-                showToast("Produk Gagal Ditambahkan");
+                if (code == 201 && status.equals("Produk berhasil ditambahkan")) {
+                    showToast("Produk Ditambahkan");
+                } else if (code == 405 && status.equals("Gagal menambahkan produk")) {
+                    showToast("Produk Gagal Ditambahkan");
+                } else {
+                    showToast(status);
+                }
             } else {
-                showToast(status);
+                showToast("Invalid server response");
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -342,12 +346,27 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
         Log.e("AddDataError", "Volley Error: " + error.toString());
 
         if (error.networkResponse != null && error.networkResponse.data != null) {
-            String errorResponse = new String(error.networkResponse.data);
-            Log.e("AddDataError", "Error response as String: " + errorResponse);
-            showToast("Error: " + errorResponse);
+            try {
+                // Attempt to parse the error response as JSON
+                String errorResponse = new String(error.networkResponse.data);
+                JSONObject jsonResponse = new JSONObject(errorResponse);
+
+                // Check if the error response is a valid JSON object
+                if (jsonResponse != null && jsonResponse.length() > 0) {
+                    int code = jsonResponse.getInt("code");
+                    String status = jsonResponse.getString("status");
+
+                    showToast("Error: " + status);
+                } else {
+                    showToast("Invalid server response");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                showToast("Invalid server response");
+            }
         } else {
             // Handle other cases or show a generic error message
-        Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
         }
     }
 
