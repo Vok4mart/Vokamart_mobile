@@ -1,5 +1,6 @@
 package com.example.vokamart.PesananFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.PesananBaru;
+import com.example.vokamart.DetailActivity.DetailPesanan;
 import com.example.vokamart.Models.MPesananBaru;
 import com.example.vokamart.R;
 
@@ -44,7 +46,7 @@ public class FPesananBaru extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         pesananArrayList = new ArrayList<>();
-        adapter = new PesananBaru(pesananArrayList, getContext());
+        adapter = new PesananBaru(pesananArrayList, getContext(), this::clicked);
         recyclerView.setAdapter(adapter);
 
         if (getContext() != null) {
@@ -102,5 +104,11 @@ public class FPesananBaru extends Fragment {
 
         // Add the request to the requestQueue
         requestQueue.add(request);
+    }
+
+    void clicked(MPesananBaru pesananBaru) {
+        Intent intent = new Intent(getActivity(), DetailPesanan.class);
+        intent.putExtra("dataPesananBaru", (CharSequence) pesananBaru);
+        startActivity(intent);
     }
 }

@@ -41,7 +41,7 @@ public class Dikirim extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_pesanan_dikirim, container, false);
-        recyclerView = rootView.findViewById(R.id.recycler_pesanan);
+        recyclerView = rootView.findViewById(R.id.recycler_pesanan_dikirim);
 
         if (recyclerView != null) {
             recyclerView.setHasFixedSize(true);

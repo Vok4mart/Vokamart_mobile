@@ -55,7 +55,7 @@ public class AdapterPesananSelesai extends RecyclerView.Adapter<AdapterPesananSe
             super(itemView);
             nama_produk = itemView.findViewById(R.id.nama_Pesanan);
             alamat_lengkap = itemView.findViewById(R.id.alamat_pesanan_lengkap);
-            kurir = itemView.findViewById(R.id.jenis_kurir);
+//            kurir = itemView.findViewById(R.id.jenis_kurir);
             harga_produk = itemView.findViewById(R.id.harga_pesanan);
         }
     }
