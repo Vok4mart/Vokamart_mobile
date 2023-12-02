@@ -7,15 +7,14 @@ public class produk implements Serializable {
     private int harga;
     private int stok;
     private String deskripsi_produk;
+    private String MimageUrl;
 
-    private String imageUrl;
-
-    public produk(String nama, int harga, int stok, String deskripsiProduk, String imageUrl) {
+    public produk(String nama, int harga, int stok, String deskripsiProduk, String MimageUrl) {
         this.nama = nama;
         this.harga = harga;
         this.stok = stok;
         this.deskripsi_produk = deskripsiProduk;
-        this.imageUrl = imageUrl;
+        this.MimageUrl = MimageUrl;
     }
 
     public String getNama() {
@@ -50,11 +49,11 @@ public class produk implements Serializable {
         this.deskripsi_produk = deskripsi_produk;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getMimageUrl() {
+        return MimageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setMimageUrl(String mimageUrl) {
+        this.MimageUrl = mimageUrl;
     }
 }

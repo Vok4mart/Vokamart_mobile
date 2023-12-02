@@ -68,7 +68,7 @@
 
     </LinearLayout>
 
-    <androidx.cardview.widget.CardView
+    <ImageView
         android:id="@+id/card_photo"
         android:layout_width="370dp"
         android:layout_height="150dp"
@@ -79,7 +79,7 @@
         android:layout_centerHorizontal="true"
         app:cardCornerRadius="10dp"
         app:cardBackgroundColor="@color/RedAccent">
-    </androidx.cardview.widget.CardView>
+    </ImageView>
 
     <LinearLayout
         android:id="@+id/linear_deskripsi"

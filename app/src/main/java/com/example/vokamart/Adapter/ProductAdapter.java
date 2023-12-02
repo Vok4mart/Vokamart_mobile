@@ -11,9 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.vokamart.DetailActivity.DetailProduk;
 import com.example.vokamart.Models.produk;
 import com.example.vokamart.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private static ArrayList<produk> produkArrayList;
     private static Context context;
     public ClickListener clickListener;
+    RequestOptions option;
 
 
     public interface ClickListener{
@@ -31,6 +34,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.produkArrayList = produkArrayList;
         this.context = context;
         this.clickListener = clickListener;
+        option = new RequestOptions().centerCrop().placeholder(R.drawable.loading_shape).error(R.drawable.loading_shape);
     }
 
     @Override
@@ -46,6 +50,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.ProductName.setText(product.getNama());
         holder.ProductPrice.setText("Price: " + product.getHarga());
         holder.ProductStock.setText("Stock: " + product.getStok());
+
+        String imageUrl = product.getMimageUrl();
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .placeholder(R.drawable.baseline_fastfood_24)
+                .into(holder.imageProduct);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

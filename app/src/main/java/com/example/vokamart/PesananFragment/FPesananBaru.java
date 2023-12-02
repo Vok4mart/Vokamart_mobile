@@ -80,10 +80,11 @@ public class FPesananBaru extends Fragment {
                                     String namaProduk = hit.getString("Nama_produk");
                                     String alamatLengkap = hit.getString("alamat_lengkap"); // Ganti dengan nama kolom yang sesuai
                                     int totalHarga = hit.getInt("sub_total");
+                                    String pesananBaruImg = hit.getString("gbr_produk");
                                     // You can add more fields as needed
 
                                     // Create and add data to pesananArrayList
-                                    pesananArrayList.add(new MPesananBaru(namaProduk, alamatLengkap, totalHarga));
+                                    pesananArrayList.add(new MPesananBaru(namaProduk, alamatLengkap, totalHarga, pesananBaruImg));
                                 }
 
                                 // Notify the adapter that the data has changed
