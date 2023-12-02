@@ -252,22 +252,22 @@
             android:layout_marginTop="30dp">
 
             <Button
-                android:layout_width="160dp"
+                android:layout_width="170dp"
                 android:layout_height="55dp"
                 android:text="Tolak Pesanan"
                 android:fontFamily="@font/lexendbold"
                 android:background="@drawable/button_secondary"
-                android:layout_marginStart="20dp" />
+                android:layout_marginStart="10dp" />
 
             <Button
-                android:layout_width="160dp"
+                android:layout_width="170dp"
                 android:layout_height="55dp"
                 android:text="Terima Pesanan"
                 android:fontFamily="@font/lexendbold"
                 android:background="@drawable/button_primary"
                 android:textColor="@color/white"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="20dp"/>
+                android:layout_marginEnd="10dp"/>
 
         </RelativeLayout>
 </LinearLayout>
