@@ -111,5 +111,6 @@ public class FPesananBaru extends Fragment {
         Intent intent = new Intent(getActivity(), DetailPesanan.class);
         intent.putExtra("dataPesananBaru", (CharSequence) pesananBaru);
         startActivity(intent);
+//        push
     }
 }
