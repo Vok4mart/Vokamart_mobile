@@ -34,7 +34,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.produkArrayList = produkArrayList;
         this.context = context;
         this.clickListener = clickListener;
-        option = new RequestOptions().centerCrop().placeholder(R.drawable.loading_shape).error(R.drawable.loading_shape);
     }
 
     @Override

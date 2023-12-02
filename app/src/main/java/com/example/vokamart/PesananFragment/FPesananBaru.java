@@ -108,9 +108,8 @@ public class FPesananBaru extends Fragment {
     }
 
     void clicked(MPesananBaru pesananBaru) {
-        Intent intent = new Intent(getActivity(), DetailPesanan.class);
+        Intent intent = new Intent(getContext(), DetailPesanan.class);
         intent.putExtra("dataPesananBaru", (CharSequence) pesananBaru);
         startActivity(intent);
-//        push
     }
 }
