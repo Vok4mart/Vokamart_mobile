@@ -58,37 +58,41 @@
 
 
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/TabLayoutPesanan"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/cari_pesanan"
-            android:layout_width="match_parent"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/TabLayoutPesanan"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/cari_pesanan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable"
+        app:tabIndicatorColor="@color/RedPrimary"
+        app:tabRippleColor="@color/RedPrimary"
+        app:tabTextAppearance="@style/MyTabTextAppearance"
+        app:tabSelectedTextColor="@color/RedPrimary"
+        app:tabGravity="fill">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"
-            app:tabIndicatorColor="@color/RedPrimary"
-            app:tabRippleColor="@color/RedPrimary"
-            app:tabTextAppearance="@style/MyTabTextAppearance"
-            app:tabSelectedTextColor="@color/RedPrimary"
-            app:tabGravity="fill">
+            android:text="Pesanan Baru"/>
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Pesanan Baru"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Perlu Dikirim"/>
 
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dikirim"/>
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dikirim"/>
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Selesai"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Selesai"/>
 
 
-        </com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:layout_below="@id/cari_pesanan"
@@ -96,9 +100,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-
-
-
 
 </RelativeLayout>

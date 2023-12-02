@@ -39,11 +39,17 @@ public class pesanan extends Fragment {
                     tab.setText("Pesanan Baru");
                     break;
                 case 1:
-                    tab.setText("Dikirim");
+                    tab.setText("Perlu Dikirim");
                     break;
                 case 2:
+                    tab.setText("Dikirim");
+                    break;
+                case 3:
                     tab.setText("Selesai");
                     break;
+//                case 4:
+//                    tab.setText("Dikomplain");
+//                    break;
             }
         }).attach();
 
