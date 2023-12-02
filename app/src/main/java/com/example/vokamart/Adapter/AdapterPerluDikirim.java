@@ -3,6 +3,7 @@ package com.example.vokamart.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,7 @@ public class AdapterPerluDikirim extends RecyclerView.Adapter<AdapterPerluDikiri
         TextView alamat_lengkap;
         TextView kurir;
         TextView harga_produk;
+        ImageView imgPerluDikirim;
         public MyViewholder(@NonNull View itemView) {
 
             super(itemView);
@@ -59,6 +61,7 @@ public class AdapterPerluDikirim extends RecyclerView.Adapter<AdapterPerluDikiri
             alamat_lengkap = itemView.findViewById(R.id.alamat_pesanan_lengkap);
             kurir = itemView.findViewById(R.id.jenis_kurir);
             harga_produk = itemView.findViewById(R.id.harga_pesanan);
+            imgPerluDikirim = itemView.findViewById(R.id.card_photo);
         }
     }
 }
