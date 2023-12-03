@@ -18,6 +18,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activity_login_lupa_password2"
+            android:exported="false" />
+        <activity
             android:name=".UbahProfil"
             android:exported="false" />
         <activity
