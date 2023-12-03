@@ -45,11 +45,9 @@ public class DetailProduk extends AppCompatActivity {
 
                 String imageUrl = Produk.getMimageUrl();
 
-// Assuming 'image' is an ImageView
                 Glide.with(getApplicationContext())
                         .load(imageUrl)
                         .placeholder(R.drawable.baseline_fastfood_24) // Optional placeholder image
-//                        .error(R.drawable.error) // Optional error image
                         .into(image);
 
                 int beratProduk = Produk.getStok();

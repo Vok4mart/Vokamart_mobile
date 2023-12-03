@@ -1,5 +1,6 @@
 package com.example.vokamart.PesananFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.AdapterPesananDikirim;
 import com.example.vokamart.Adapter.AdapterPesananSelesai;
+import com.example.vokamart.DetailActivity.DetailPesananSelesai;
 import com.example.vokamart.Models.MSelesai;
 import com.example.vokamart.R;
 
@@ -48,7 +50,7 @@ public class Selesai extends Fragment {
             recyclerView.setLayoutManager(layoutManager);
 
             pesananSelesai = new ArrayList<>();
-            adapter = new AdapterPesananSelesai(pesananSelesai, getContext());
+            adapter = new AdapterPesananSelesai(pesananSelesai, getContext(), this::cliked);
             recyclerView.setAdapter(adapter);
 
             if (getContext() != null) {
@@ -62,6 +64,12 @@ public class Selesai extends Fragment {
         }
 
         return rootView;
+    }
+
+    private void cliked(MSelesai mSelesai) {
+        Intent intent = new Intent(getActivity(), DetailPesananSelesai.class);
+        intent.putExtra("dataPesananSelesai", mSelesai);
+        startActivity(intent);
     }
 
     private void parseJSON() {

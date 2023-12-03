@@ -36,6 +36,9 @@
             android:name=".DetailActivity.DetailPesananPerluDikirim"
             android:exported="false" />
         <activity
+            android:name=".DetailActivity.DetailPesananSelesai"
+            android:exported="false" />
+        <activity
             android:name=".Navbar"
             android:exported="true" />
         <activity
