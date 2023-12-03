@@ -1,14 +1,17 @@
 package com.example.vokamart.Models;
 
+import android.content.Context;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MPerluDikirim {
+public class MPerluDikirim implements Serializable {
     private String nama_produk, alamat_lengkap, kurir;
     private int harga_produk;
     private String pesananPerluDikirimImg;
 
 
-    public MPerluDikirim(String nama_produk, String alamat_lengkap, String kurir, int harga_produk, String pesananPerluDikirimImg){
+    public MPerluDikirim(String nama_produk, String alamat_lengkap, int harga_produk, String pesananPerluDikirimImg){
         this.nama_produk = nama_produk;
         this.alamat_lengkap = alamat_lengkap;
         this.kurir = kurir;

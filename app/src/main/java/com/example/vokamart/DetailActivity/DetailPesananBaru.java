@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.example.vokamart.Models.MPesananBaru;
 import com.example.vokamart.R;
 
-public class DetailPesanan extends AppCompatActivity {
+public class DetailPesananBaru extends AppCompatActivity {
     Intent intent;
     private MPesananBaru MPesananBaru;
 

@@ -18,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.PesananBaru;
-import com.example.vokamart.DetailActivity.DetailPesanan;
+import com.example.vokamart.DetailActivity.DetailPesananBaru;
 import com.example.vokamart.Models.MPesananBaru;
 import com.example.vokamart.R;
 
@@ -108,7 +108,7 @@ public class FPesananBaru extends Fragment {
     }
 
     void clicked(MPesananBaru pesananBaru) {
-        Intent intent = new Intent(getActivity(), DetailPesanan.class);
+        Intent intent = new Intent(getActivity(), DetailPesananBaru.class);
         intent.putExtra("dataPesananBaru", pesananBaru);
         startActivity(intent);
     }

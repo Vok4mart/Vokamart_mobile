@@ -30,7 +30,10 @@
             android:name=".DetailActivity.DetailProduk"
             android:exported="false" />
         <activity
-            android:name=".DetailActivity.DetailPesanan"
+            android:name=".DetailActivity.DetailPesananBaru"
+            android:exported="false" />
+        <activity
+            android:name=".DetailActivity.DetailPesananPerluDikirim"
             android:exported="false" />
         <activity
             android:name=".Navbar"

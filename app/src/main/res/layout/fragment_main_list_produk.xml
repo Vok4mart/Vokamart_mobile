@@ -70,7 +70,8 @@
             android:height="60dp"
             app:queryHint="Pencarian"
             android:fontFamily="@font/lexendregular"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            app:iconifiedByDefault="false"/>
     </LinearLayout>
     <View
         android:id="@+id/view_garis_bawah_filter"
