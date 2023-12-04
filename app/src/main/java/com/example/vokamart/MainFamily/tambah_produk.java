@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.text.TextUtils;
+
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +27,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vokamart.API.Constant;
 import com.example.vokamart.Adapter.SpinnerAdapter;
@@ -36,7 +39,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class tambah_produk extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -89,7 +94,7 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
         btnTambah.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adddata();
+                addData();
             }
         });
 
@@ -288,58 +293,62 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
     }
 
 
-    private void adddata() {
-        String url = "https://vok4mart.000webhostapp.com/TambahProdukApi.php";
+    private void addData() {
+        String url = "https://vok4mart.000webhostapp.com/TambahProdukApiTest.php";
         try {
-            JSONObject jsonRequest = createJsonRequest();
+            Map<String, String> params = createParamsMap();
+            Log.d("PARAMS_MAP", "Params: " + params.toString());
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, jsonRequest,
-                    this::handleResponse,
-                    this::handleError);
+            StringRequest request = new StringRequest(Request.Method.POST, url, this::handleResponse, this::handleError) {
+                @Override
+                protected Map<String, String> getParams() {
+                    return params;
+                }
+            };
 
-            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-            requestQueue.add(request);
-
+            Volley.newRequestQueue(getApplicationContext()).add(request);
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "JSON ERROR", Toast.LENGTH_SHORT).show();
+            showToast("JSON ERROR");
         }
     }
 
-    private JSONObject createJsonRequest() throws JSONException {
-        JSONObject jsonRequest = new JSONObject();
-        jsonRequest.put("nama_produk", etNama.getText().toString().trim());
-        jsonRequest.put("harga_produk", etHarga.getText().toString().trim());
-        jsonRequest.put("deskripsi_produk", etDeskripsi.getText().toString().trim());
-        jsonRequest.put("stok", etStok.getText().toString().trim());
-        jsonRequest.put("berat", etBerat.getText().toString().trim());
+    private Map<String, String> createParamsMap() throws JSONException {
+        Map<String, String> params = new HashMap<>();
+
+        // Log values
+        logValue("Harga", etHarga);
+        logValue("Stok", etStok);
+        logValue("Berat", etBerat);
+
+        params.put("nama_produk", getValue(etNama));
+        params.put("harga_produk", String.valueOf(parseIntValue(etHarga)));
+        params.put("deskripsi_produk", getValue(etDeskripsi));
+        params.put("stok", String.valueOf(parseIntValue(etStok)));
+        params.put("berat", String.valueOf(parseIntValue(etBerat)));
 
         kategoriList selectedItem = (kategoriList) spinner.getSelectedItem();
-        String idKategori = selectedItem.getId_kategori();
-        jsonRequest.put("id_kategori", idKategori);
+        if (selectedItem != null) {
+            params.put("id_kategori", selectedItem.getId_kategori());
+        }
 
-        return jsonRequest;
+        return params;
     }
 
-    private void handleResponse(JSONObject response) {
+    private void handleResponse(String response) {
         try {
-            if (response != null && response.length() > 0) {
-                int code = response.getInt("code");
-                String status = response.getString("status");
+            if (!TextUtils.isEmpty(response)) {
+                JSONObject jsonResponse = new JSONObject(response);
+                int code = jsonResponse.getInt("code");
+                String status = jsonResponse.getString("status");
 
-                if (code == 201 && status.equals("Produk berhasil ditambahkan")) {
-                    showToast("Produk Ditambahkan");
-                } else if (code == 405 && status.equals("Gagal menambahkan produk")) {
-                    showToast("Produk Gagal Ditambahkan");
-                } else {
-                    showToast(status);
-                }
+                showToast((code == 201 && status.equals("Tambah Produk berhasil")) ? "Produk Ditambahkan" : status);
             } else {
                 showToast("Invalid server response");
             }
         } catch (JSONException e) {
             e.printStackTrace();
-            Toast.makeText(getApplicationContext(), "JSON ERROR", Toast.LENGTH_SHORT).show();
+            showToast("JSON ERROR");
         }
     }
 
@@ -349,11 +358,9 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
 
         if (error.networkResponse != null && error.networkResponse.data != null) {
             try {
-                // Attempt to parse the error response as JSON
                 String errorResponse = new String(error.networkResponse.data);
                 JSONObject jsonResponse = new JSONObject(errorResponse);
 
-                // Check if the error response is a valid JSON object
                 if (jsonResponse != null && jsonResponse.length() > 0) {
                     int code = jsonResponse.getInt("code");
                     String status = jsonResponse.getString("status");
@@ -367,8 +374,7 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
                 showToast("Invalid server response");
             }
         } else {
-            // Handle other cases or show a generic error message
-            Toast.makeText(getApplicationContext(), "Network Error", Toast.LENGTH_SHORT).show();
+            showToast("Network Error");
         }
     }
 
@@ -376,5 +382,21 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    private void logValue(String label, EditText editText) {
+        Log.d("VALUES", label + ": " + getValue(editText));
+    }
+
+    private String getValue(EditText editText) {
+        return editText.getText().toString().trim();
+    }
+
+    private int parseIntValue(EditText editText) {
+        try {
+            return Integer.parseInt(getValue(editText));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return 0; // or handle the default value accordingly
+        }
+    }
 }
 
