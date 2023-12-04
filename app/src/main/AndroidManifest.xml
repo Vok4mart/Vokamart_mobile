@@ -39,6 +39,9 @@
             android:name=".DetailActivity.DetailPesananSelesai"
             android:exported="false" />
         <activity
+            android:name=".DetailActivity.DetailPesananDikirim"
+            android:exported="false" />
+        <activity
             android:name=".Navbar"
             android:exported="true" />
         <activity

@@ -1,5 +1,6 @@
 package com.example.vokamart.PesananFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -19,8 +20,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.AdapterPesananDikirim;
 
+import com.example.vokamart.Adapter.PesananBaru;
+import com.example.vokamart.DetailActivity.DetailPesananBaru;
+import com.example.vokamart.DetailActivity.DetailPesananDikirim;
 import com.example.vokamart.Models.MDikirim;
 
+import com.example.vokamart.Models.MPesananBaru;
 import com.example.vokamart.R;
 
 import org.json.JSONArray;
@@ -49,7 +54,7 @@ public class Dikirim extends Fragment {
             recyclerView.setLayoutManager(layoutManager);
 
             pesananDikirim = new ArrayList<>();
-            adapter = new AdapterPesananDikirim(pesananDikirim, getContext());
+            adapter = new AdapterPesananDikirim(pesananDikirim, getContext(), this::clicked);
             recyclerView.setAdapter(adapter);
 
             if (getContext() != null) {
@@ -63,6 +68,12 @@ public class Dikirim extends Fragment {
         }
 
         return rootView;
+    }
+
+    private void clicked(MDikirim MDikirim) {
+        Intent intent = new Intent(getActivity(), DetailPesananDikirim.class);
+        intent.putExtra("dataPesananDikirim", MDikirim);
+        startActivity(intent);
     }
 
     private void parseJSON() {

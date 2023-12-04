@@ -1,6 +1,8 @@
 package com.example.vokamart.Models;
 
-public  class MDikirim {
+import java.io.Serializable;
+
+public  class MDikirim implements Serializable {
 
     private String nama_produk, alamat_lengkap, kurir;
     private int harga_produk;
