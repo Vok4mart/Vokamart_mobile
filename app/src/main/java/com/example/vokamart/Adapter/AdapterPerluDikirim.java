@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.vokamart.Models.MPerluDikirim;
 import com.example.vokamart.R;
 
@@ -47,6 +48,12 @@ public class AdapterPerluDikirim extends RecyclerView.Adapter<AdapterPerluDikiri
         holder.alamat_lengkap.setText(pesanan.getAlamat_lengkap());
 //        holder.kurir.setText(pesanan.getKurir());
         holder.harga_produk.setText("Harga: " + pesanan.getHarga_produk());
+
+        String imageUrl = pesanan.getImg();
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .placeholder(R.drawable.baseline_fastfood_24)
+                .into(holder.imgPerluDikirim);
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

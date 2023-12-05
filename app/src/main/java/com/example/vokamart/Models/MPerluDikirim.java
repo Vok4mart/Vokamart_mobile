@@ -9,6 +9,7 @@ public class MPerluDikirim implements Serializable {
     private String nama_produk, alamat_lengkap, kurir;
     private int harga_produk;
     private String pesananPerluDikirimImg;
+    private String img;
 
 
     public MPerluDikirim(String nama_produk, String alamat_lengkap, int harga_produk, String pesananPerluDikirimImg){
@@ -57,5 +58,13 @@ public class MPerluDikirim implements Serializable {
 
     public void setPesananPerluDikirimImg(String pesananPerluDikirimImg) {
         this.pesananPerluDikirimImg = pesananPerluDikirimImg;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 }
