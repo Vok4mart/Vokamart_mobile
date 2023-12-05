@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class MSelesai implements Serializable {
     private String nama_produk, alamat_lengkap, kurir;
     private int harga_produk;
-    private String img;
 
 
     public MSelesai(String nama_produk, String alamat_lengkap, int harga_produk){
@@ -45,13 +44,5 @@ public class MSelesai implements Serializable {
 
     public void setHarga_produk(int harga_produk) {
         this.harga_produk = harga_produk;
-    }
-
-    public String getImg() {
-        return img;
-    }
-
-    public void setImg(String img) {
-        this.img = img;
     }
 }

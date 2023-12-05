@@ -4,13 +4,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.vokamart.Models.MDikirim;
 import com.example.vokamart.R;
 
@@ -50,12 +48,6 @@ public class AdapterPesananDikirim extends RecyclerView.Adapter<AdapterPesananDi
 //        holder.kurir.setText(pesanan.getKurir());
         holder.harga_produk.setText("Harga: " + pesanan.getHarga_produk());
 
-        String imageUrl = pesanan.getImg();
-        Glide.with(holder.itemView.getContext())
-                .load(imageUrl)
-                .placeholder(R.drawable.baseline_fastfood_24)
-                .into(holder.img_produk);
-
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,7 +68,6 @@ public class AdapterPesananDikirim extends RecyclerView.Adapter<AdapterPesananDi
         TextView alamat_lengkap;
         TextView kurir;
         TextView harga_produk;
-        ImageView img_produk;
         public MyViewholder(@NonNull View itemView) {
             super(itemView);
 
@@ -84,7 +75,6 @@ public class AdapterPesananDikirim extends RecyclerView.Adapter<AdapterPesananDi
             alamat_lengkap = itemView.findViewById(R.id.alamat_pesanan_lengkap);
             kurir = itemView.findViewById(R.id.jenis_kurir);
             harga_produk = itemView.findViewById(R.id.harga_pesanan);
-            img_produk = itemView.findViewById(R.id.gambar_Pesanan);
         }
     }
 }
