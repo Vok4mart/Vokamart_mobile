@@ -1,16 +1,14 @@
-package com.example.vokamart.DetailActivity;
+package com.example.vokamart;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.vokamart.R;
-
-public class DetailPesanan extends AppCompatActivity {
+public class activity_produk_update extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pesanan_detail_pesanan);
+        setContentView(R.layout.activity_produk_update);
     }
 }

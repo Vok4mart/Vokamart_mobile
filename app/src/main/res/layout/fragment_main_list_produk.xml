@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:id="@+id/header_Produk"
@@ -61,29 +61,17 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/header_Produk">
 
-        <EditText
+        <androidx.appcompat.widget.SearchView
             android:layout_marginTop="5dp"
             android:id="@+id/cari"
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:background="@drawable/search_border"
             android:height="60dp"
-            android:inputType="text"
-            android:hint="  Pencarian"
-            android:autofillHints="name"
+            app:queryHint="Pencarian"
             android:fontFamily="@font/lexendregular"
             android:textSize="15sp"
-            android:paddingStart="8dp"/>
-
-        <Button
-            android:id="@+id/filter"
-            android:layout_width="100dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/button_primary"
-            android:fontFamily="@font/lexendsemibold"
-            android:text="@string/filter"
-            android:textColor="@color/white" />
+            app:iconifiedByDefault="false"/>
     </LinearLayout>
     <View
         android:id="@+id/view_garis_bawah_filter"
@@ -91,7 +79,7 @@
         android:layout_height="3dp"
         android:background="@color/GreyText"
         android:layout_below="@id/cariframe"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="20dp"/>
 
     <LinearLayout
         android:layout_below="@id/view_garis_bawah_filter"

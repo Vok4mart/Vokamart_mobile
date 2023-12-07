@@ -56,7 +56,7 @@ public class PesananDikomplain extends RecyclerView.Adapter<PesananDikomplain.My
 
             nama_produk = itemView.findViewById(R.id.nama_Pesanan);
             alamat_lengkap = itemView.findViewById(R.id.alamat_pesanan_lengkap);
-            kurir = itemView.findViewById(R.id.jenis_kurir);
+//            kurir = itemView.findViewById(R.id.jenis_kurir);
             harga_produk = itemView.findViewById(R.id.harga_pesanan);
         }
     }

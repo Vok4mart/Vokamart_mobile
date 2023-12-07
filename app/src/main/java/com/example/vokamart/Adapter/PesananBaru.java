@@ -1,12 +1,15 @@
 package com.example.vokamart.Adapter;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.vokamart.Models.MPesananBaru;
 import com.example.vokamart.R;
 
@@ -14,17 +17,25 @@ import java.util.ArrayList;
 
 public class PesananBaru extends RecyclerView.Adapter<PesananBaru.MyViewHolder>{
 
-    private final ArrayList<MPesananBaru> MPesananBaru;
+    private static ArrayList<MPesananBaru> MPesananBaru;
+    private static Context context;
+    public ClickListener clickListener;
 
-    public PesananBaru(ArrayList<MPesananBaru> Mpesanan_baru) {
+    public interface ClickListener{
+        void clicked(MPesananBaru pesananBaru);
+    }
+
+    public PesananBaru(ArrayList<MPesananBaru> Mpesanan_baru, Context context, ClickListener clickListener) {
         this.MPesananBaru = Mpesanan_baru;
+        this.context = context;
+        this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.card_item_pesanan, parent, false);
+//        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        View view = LayoutInflater.from(context).inflate(R.layout.card_item_pesanan, parent, false);
         return new MyViewHolder(view);
     }
 
@@ -34,8 +45,21 @@ public class PesananBaru extends RecyclerView.Adapter<PesananBaru.MyViewHolder>{
 
         holder.nama_produk.setText(pesanan.getNama_produk());
         holder.alamat_lengkap.setText(pesanan.getAlamat_lengkap());
-        holder.kurir.setText(pesanan.getKurir());
+//        holder.kurir.setText(pesanan.getKurir());
         holder.harga_produk.setText("Harga: " + pesanan.getHarga_produk());
+
+        String imageUrl = pesanan.getPesananBaruImg();
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .placeholder(R.drawable.baseline_fastfood_24)
+                .into(holder.img_produk);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.clicked(pesanan);
+            }
+        });
     }
 
     @Override
@@ -47,16 +71,18 @@ public class PesananBaru extends RecyclerView.Adapter<PesananBaru.MyViewHolder>{
 
         TextView nama_produk;
         TextView alamat_lengkap;
-        TextView kurir;
+//        TextView kurir;
         TextView harga_produk;
+        ImageView img_produk;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             nama_produk = itemView.findViewById(R.id.nama_Pesanan);
             alamat_lengkap = itemView.findViewById(R.id.alamat_pesanan_lengkap);
-            kurir = itemView.findViewById(R.id.jenis_kurir);
+//            kurir = itemView.findViewById(R.id.jenis_kurir);
             harga_produk = itemView.findViewById(R.id.harga_pesanan);
+            img_produk = itemView.findViewById(R.id.gambar_Pesanan);
         }
     }
 }

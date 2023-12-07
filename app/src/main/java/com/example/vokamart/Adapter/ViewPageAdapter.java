@@ -12,7 +12,7 @@ import com.example.vokamart.PesananFragment.PerluDikirim;
 import com.example.vokamart.PesananFragment.Selesai;
 
 public class ViewPageAdapter extends FragmentStateAdapter {
-    private static final int NUM_TABS = 5;
+    private static final int NUM_TABS = 4;
 
     public ViewPageAdapter(@NonNull FragmentActivity fragmentActivity) {
         super(fragmentActivity);
@@ -31,8 +31,8 @@ public class ViewPageAdapter extends FragmentStateAdapter {
                 return new Dikirim();
             case 3:
                 return new Selesai();
-            case 4:
-                return new Dikomplain();
+//            case 4:
+//                return new Dikomplain();
         }
         return null;
     }

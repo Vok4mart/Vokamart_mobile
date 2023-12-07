@@ -47,9 +47,9 @@ public class pesanan extends Fragment {
                 case 3:
                     tab.setText("Selesai");
                     break;
-                case 4:
-                    tab.setText("Dikomplain");
-                    break;
+//                case 4:
+//                    tab.setText("Dikomplain");
+//                    break;
             }
         }).attach();
 

@@ -1,8 +1,10 @@
 package com.example.vokamart.Adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,9 +18,17 @@ import java.util.ArrayList;
 public class AdapterPerluDikirim extends RecyclerView.Adapter<AdapterPerluDikirim.MyViewholder> {
 
     private final ArrayList<MPerluDikirim> MPerluDikirim;
+    private static Context context;
+    public ClickListener clickListener;
 
-    public AdapterPerluDikirim(ArrayList<MPerluDikirim> MPerluDikirim) {
+    public interface ClickListener{
+        void clicked(MPerluDikirim pesananPerluDikirim);
+    }
+
+    public AdapterPerluDikirim(ArrayList<MPerluDikirim> MPerluDikirim, Context context, ClickListener clickListener) {
         this.MPerluDikirim = MPerluDikirim;
+        this.context = context;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -35,8 +45,16 @@ public class AdapterPerluDikirim extends RecyclerView.Adapter<AdapterPerluDikiri
 
         holder.nama_produk.setText(pesanan.getNama_produk());
         holder.alamat_lengkap.setText(pesanan.getAlamat_lengkap());
-        holder.kurir.setText(pesanan.getKurir());
+//        holder.kurir.setText(pesanan.getKurir());
         holder.harga_produk.setText("Harga: " + pesanan.getHarga_produk());
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.clicked(pesanan);
+            }
+        });
 
     }
 
@@ -51,14 +69,16 @@ public class AdapterPerluDikirim extends RecyclerView.Adapter<AdapterPerluDikiri
         TextView alamat_lengkap;
         TextView kurir;
         TextView harga_produk;
+        ImageView imgPerluDikirim;
         public MyViewholder(@NonNull View itemView) {
 
             super(itemView);
 
             nama_produk = itemView.findViewById(R.id.nama_Pesanan);
             alamat_lengkap = itemView.findViewById(R.id.alamat_pesanan_lengkap);
-            kurir = itemView.findViewById(R.id.jenis_kurir);
+//            kurir = itemView.findViewById(R.id.jenis_kurir);
             harga_produk = itemView.findViewById(R.id.harga_pesanan);
+            imgPerluDikirim = itemView.findViewById(R.id.card_photo);
         }
     }
 }

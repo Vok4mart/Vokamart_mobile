@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DetailActivity.DetailPesananBaru">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/header1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/menu"/>
+
+        <TextView
+            android:id="@+id/dikomplain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10sp"
+            android:layout_marginTop="35sp"
+            android:text="Detail Pesanan"
+            android:fontFamily="@font/lexendbold"
+            android:textSize="20sp"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/garis_bawah_detail_pesanan"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="@color/GreyText"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"
+            android:textSize="15sp"
+            android:text="Detail Produk"
+            android:fontFamily="@font/lexendregular"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyler_detail_pesanan_baru"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/garis_bawah_detail_produk"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="@color/GreyText"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Detail Pengiriman"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        android:fontFamily="@font/lexendbold"/>
+
+    <LinearLayout
+        android:id="@+id/txt_kurir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginStart="30sp"
+            android:textSize="15sp"
+            android:text="Kurir"
+            android:fontFamily="@font/lexendregular"/>
+
+        <TextView
+            android:id="@+id/nama_kurir_baru"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginStart="30sp"
+            android:textSize="15sp"
+            android:textColor="@color/RedPrimary"
+            android:text="nama kurir"
+            android:fontFamily="@font/lexendregular"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginStart="30sp"
+            android:textSize="15sp"
+            android:text="Alamat"
+            android:fontFamily="@font/lexendregular"/>
+
+        <TextView
+            android:id="@+id/nama_pembeli_baru"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:layout_marginStart="14sp"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:text="nama pembeli"
+            android:fontFamily="@font/lexendregular"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="97dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/no_hp_baru"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:textSize="15sp"
+            android:text="no hp"
+            android:fontFamily="@font/lexendregular"/>
+
+        <TextView
+            android:id="@+id/alamat_baru"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10sp"
+            android:textSize="15sp"
+            android:text="alamat"
+            android:fontFamily="@font/lexendregular"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/garis_bawah_detail_pengiriman"
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/GreyText"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/garis_bawah_detail_pesanan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detail Pembayaran"
+            android:fontFamily="@font/lexendregular"
+            android:textColor="@color/black"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="30dp"/>
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp">
+
+            <TextView
+                android:id="@+id/total_harga_baru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Harga"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:id="@+id/rupiah_total_baru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:text="Total Harga" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp">
+
+            <TextView
+                android:id="@+id/ongkir_baru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ongkos Kirim"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:id="@+id/rupiah_ongkir_baru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Harga"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp">
+
+            <TextView
+                android:id="@+id/jumlah_total_baru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Harga"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentStart="true"/>
+
+            <TextView
+                android:id="@+id/rupiah_jumlah_total_baru"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Harga"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/btn_tolak_pesanan_baru"
+                android:layout_width="170dp"
+                android:layout_height="55dp"
+                android:text="Tolak Pesanan"
+                android:fontFamily="@font/lexendbold"
+                android:background="@drawable/button_secondary"
+                 />
+
+            <Button
+                android:id="@+id/btn_terima_pesanan_baru"
+                android:layout_width="170dp"
+                android:layout_height="55dp"
+                android:text="Terima Pesanan"
+                android:fontFamily="@font/lexendbold"
+                android:background="@drawable/button_primary"
+                android:textColor="@color/white"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="10dp"/>
+
+        </LinearLayout>
+</LinearLayout>
+
+</ScrollView>
