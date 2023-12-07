@@ -17,9 +17,18 @@ import java.util.ArrayList;
 public class AdapterPesananDikirim extends RecyclerView.Adapter<AdapterPesananDikirim.MyViewholder> {
 
     private final ArrayList<MDikirim> MDikirim;
+    private static Context context;
+    public ClickListener clickListener;
 
-    public AdapterPesananDikirim(ArrayList<MDikirim> MDikirim, Context context) {
+    public interface ClickListener{
+        void clicked(MDikirim MDikirim);
+
+    }
+
+    public AdapterPesananDikirim(ArrayList<MDikirim> MDikirim, Context context, ClickListener clickListener) {
         this.MDikirim = MDikirim;
+        this.context = context;
+        this.clickListener = clickListener;
     }
 
     @NonNull
@@ -38,6 +47,14 @@ public class AdapterPesananDikirim extends RecyclerView.Adapter<AdapterPesananDi
         holder.alamat_lengkap.setText(pesanan.getAlamat_lengkap());
 //        holder.kurir.setText(pesanan.getKurir());
         holder.harga_produk.setText("Harga: " + pesanan.getHarga_produk());
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickListener.clicked(pesanan);
+            }
+        });
     }
 
     @Override

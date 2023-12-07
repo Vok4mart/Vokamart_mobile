@@ -120,7 +120,7 @@
             android:fontFamily="@font/lexendregular"/>
 
         <TextView
-            android:id="@+id/nama_pembeli_dikirim"
+            android:id="@+id/nama_pembeli_perlu_dikirim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10sp"
@@ -138,7 +138,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/no_hp_dikirim"
+            android:id="@+id/no_hp_perlu_dikirim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10sp"
@@ -147,7 +147,7 @@
             android:fontFamily="@font/lexendregular"/>
 
         <TextView
-            android:id="@+id/alamat_dikirim"
+            android:id="@+id/alamat_perlu_dikirim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10sp"
@@ -192,7 +192,7 @@
                 android:layout_alignParentStart="true"/>
 
             <TextView
-                android:id="@+id/total_rupiah_dikirim"
+                android:id="@+id/total_rupiah_perlu_dikirim"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total Harga"
@@ -215,13 +215,13 @@
                 android:layout_alignParentStart="true"/>
 
             <TextView
-                android:id="@+id/rupaihongkir_dikirim"
+                android:id="@+id/rupiah_ongkir_perlu_dikirim"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Harga"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
-                android:layout_alignParentEnd="true"/>
+                android:text="Total Harga" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -237,7 +237,7 @@
                 android:layout_alignParentStart="true"/>
 
             <TextView
-                android:id="@+id/jumlah_rupiah_dikirim"
+                android:id="@+id/jumlah_rupiah_perlu_dikirim"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Total Harga"

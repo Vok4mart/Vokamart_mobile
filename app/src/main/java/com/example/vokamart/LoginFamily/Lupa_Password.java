@@ -148,8 +148,8 @@ public class Lupa_Password extends AppCompatActivity {
         generatedOTP = otpGenerator.generateOTP(6);
         String OTP = generatedOTP;
         EmailSender.sendEmail(email, generatedOTP);
-//        Toast.makeText(this, "OTP berhasil dikirim ke email", Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, OTP, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "OTP berhasil dikirim ke email", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, OTP, Toast.LENGTH_SHORT).show();
     }
 
 

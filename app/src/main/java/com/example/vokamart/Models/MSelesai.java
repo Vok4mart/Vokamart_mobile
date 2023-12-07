@@ -1,6 +1,8 @@
 package com.example.vokamart.Models;
 
-public class MSelesai {
+import java.io.Serializable;
+
+public class MSelesai implements Serializable {
     private String nama_produk, alamat_lengkap, kurir;
     private int harga_produk;
 
