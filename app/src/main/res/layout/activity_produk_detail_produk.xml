@@ -186,12 +186,14 @@
         android:gravity="center">
 
         <Button
+            android:id="@+id/edit_btn"
             android:layout_width="160dp"
             android:layout_height="55dp"
-            android:text="Edit"
-            android:fontFamily="@font/lexendbold"/>
+            android:fontFamily="@font/lexendbold"
+            android:text="Edit" />
 
         <Button
+            android:id="@+id/hapus_btn"
             android:layout_width="160dp"
             android:layout_height="wrap_content"
             android:text="Hapus"

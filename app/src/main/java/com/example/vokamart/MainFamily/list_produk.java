@@ -122,10 +122,11 @@ public class list_produk extends Fragment implements ProductAdapter.ClickListene
                                             String nama = hit.getString("nama_produk");
                                             int harga = hit.getInt("harga_produk");
                                             int stok = hit.getInt("stok");
+                                            String id = hit.getString("id_produk");
                                             String deskripsiProduk = hit.getString("deskripsi_produk");
                                             String imageUrl = hit.getString("gbr_produk");
 
-                                            produkArrayList.add(new produk(nama, harga, stok, deskripsiProduk, imageUrl));
+                                            produkArrayList.add(new produk(id,nama, harga, stok, deskripsiProduk, imageUrl));
                                         }
 
                                         // Setelah mendapatkan data, panggil notifyDataSetChanged() pada adapter
@@ -141,6 +142,7 @@ public class list_produk extends Fragment implements ProductAdapter.ClickListene
                                             editor.putInt("harga_produk", lastProduk.getHarga());
                                             editor.putInt("berat", lastProduk.getStok());
                                             editor.putString("deskripsi_produk", lastProduk.getDeskripsi_produk());
+                                            editor.putString("id_produk", lastProduk.getId());
                                             editor.apply();
                                         }
                                     } else {

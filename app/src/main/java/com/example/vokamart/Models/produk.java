@@ -3,13 +3,17 @@ package com.example.vokamart.Models;
 import java.io.Serializable;
 
 public class produk implements Serializable {
+    private String id;
     private String nama;
     private int harga;
     private int stok;
     private String deskripsi_produk;
     private String MimageUrl;
 
-    public produk(String nama, int harga, int stok, String deskripsiProduk, String MimageUrl) {
+
+
+    public produk(String id_produk, String nama, int harga, int stok, String deskripsiProduk, String MimageUrl) {
+        this.id = id_produk;
         this.nama = nama;
         this.harga = harga;
         this.stok = stok;
@@ -56,4 +60,13 @@ public class produk implements Serializable {
     public void setMimageUrl(String mimageUrl) {
         this.MimageUrl = mimageUrl;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }
