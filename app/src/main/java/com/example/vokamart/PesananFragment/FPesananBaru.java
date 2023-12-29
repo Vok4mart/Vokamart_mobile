@@ -1,6 +1,8 @@
 package com.example.vokamart.PesananFragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +30,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-
 public class FPesananBaru extends Fragment {
     private PesananBaru adapter;
     private ArrayList<MPesananBaru> pesananArrayList;
@@ -49,8 +50,9 @@ public class FPesananBaru extends Fragment {
         adapter = new PesananBaru(pesananArrayList, getContext(), this::clicked);
         recyclerView.setAdapter(adapter);
 
+        requestQueue = Volley.newRequestQueue(requireContext()); // Using requireContext() instead of getContext() for non-nullable context
+
         if (getContext() != null) {
-            requestQueue = Volley.newRequestQueue(getContext());
             parseJSON();
         } else {
             Toast.makeText(getContext(), "Konteks null", Toast.LENGTH_SHORT).show();
@@ -60,55 +62,78 @@ public class FPesananBaru extends Fragment {
     }
 
     private void parseJSON() {
-        String url = "https://vok4mart.000webhostapp.com/ApiPesananBaru.php";
+        try {
+            SharedPreferences sharedPreferences = requireContext().getSharedPreferences("detail", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            // Clear existing data in pesananArrayList
-                            pesananArrayList.clear();
+            String url = "https://vok4mart.000webhostapp.com/ApiPesananBaru.php";
 
-                            // Parse pesanan data
-                            if (response != null) {
-                                JSONArray jsonArray = response.getJSONArray("data");
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                // Clear existing data in pesananArrayList
+                                pesananArrayList.clear();
 
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject hit = jsonArray.getJSONObject(i);
+                                // Parse pesanan data
+                                if (response != null) {
+                                    JSONArray jsonArray = response.getJSONArray("data");
 
-                                    String namaProduk = hit.getString("Nama_produk");
-                                    String alamatLengkap = hit.getString("alamat_lengkap"); // Ganti dengan nama kolom yang sesuai
-                                    int totalHarga = hit.getInt("sub_total");
-                                    String pesananBaruImg = hit.getString("gbr_produk");
-                                    // You can add more fields as needed
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject hit = jsonArray.getJSONObject(i);
 
-                                    // Create and add data to pesananArrayList
-                                    pesananArrayList.add(new MPesananBaru(namaProduk, alamatLengkap, totalHarga, pesananBaruImg));
+                                        String namaProduk = hit.getString("Nama_produk");
+                                        String alamatLengkap = hit.getString("alamat_lengkap");
+                                        int totalHarga = hit.getInt("sub_total");
+                                        String pesananBaruImg = hit.getString("gbr_produk");
+                                        String idPesanan = hit.getString("id_pesanan");
+                                        String statusPesanan = hit.getString("status_pesanan");
+
+                                        // Create and add data to pesananArrayList
+                                        pesananArrayList.add(new MPesananBaru(namaProduk, alamatLengkap, totalHarga, pesananBaruImg, idPesanan, statusPesanan));
+                                    }
+
+                                    // Notify the adapter that the data has changed
+                                    adapter.notifyDataSetChanged();
+
+                                    if (!pesananArrayList.isEmpty()) {
+                                        int lastIndex = pesananArrayList.size() - 1;
+                                        MPesananBaru lastPesanan = pesananArrayList.get(lastIndex);
+
+                                        editor.putString("Nama_produk", lastPesanan.getNama_produk());
+                                        editor.putString("alamat_lengkap", lastPesanan.getAlamat_lengkap());
+                                        editor.putInt("sub_total", lastPesanan.getHarga_produk());
+                                        editor.putString("gbr_produk", lastPesanan.getPesananBaruImg());
+                                        editor.putString("id_pesanan", lastPesanan.getIdPesanan());
+                                        editor.putString("status_pesanan", lastPesanan.getStatusPesanan());
+
+                                        // Apply the changes
+                                        editor.apply();
+                                    }
                                 }
-
-                                // Notify the adapter that the data has changed
-                                adapter.notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                // Handle JSON parsing error here
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            // Handle JSON parsing error here
                         }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
-                // Handle Volley error here
-            }
-        });
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    // Handle Volley error here
+                }
+            });
 
-        // Add the request to the requestQueue
-        requestQueue.add(request);
+            // Add the request to the requestQueue
+            requestQueue.add(request);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     void clicked(MPesananBaru pesananBaru) {
-        Intent intent = new Intent(getActivity(), DetailPesananBaru.class);
+        Intent intent = new Intent(requireActivity(), DetailPesananBaru.class);
         intent.putExtra("dataPesananBaru", pesananBaru);
         startActivity(intent);
     }

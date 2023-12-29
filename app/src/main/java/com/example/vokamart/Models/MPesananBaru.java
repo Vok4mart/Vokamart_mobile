@@ -7,11 +7,32 @@ public class MPesananBaru implements Serializable {
     private int harga_produk;
     private String pesananBaruImg;
 
-    public MPesananBaru(String nama_produk, String alamat_lengkap, int harga_produk, String pesananBaruImg){
+    public String getIdPesanan() {
+        return idPesanan;
+    }
+
+    public void setIdPesanan(String idPesanan) {
+        this.idPesanan = idPesanan;
+    }
+
+    public String getStatusPesanan() {
+        return StatusPesanan;
+    }
+
+    public void setStatusPesanan(String statusPesanan) {
+        StatusPesanan = statusPesanan;
+    }
+
+    private String idPesanan;
+    private String StatusPesanan;
+
+    public MPesananBaru(String nama_produk, String alamat_lengkap, int harga_produk, String pesananBaruImg, String idPesanan, String StatusPesanan){
         this.nama_produk = nama_produk;
         this.alamat_lengkap = alamat_lengkap;
-        this.harga_produk =harga_produk;
+        this.harga_produk = harga_produk;
         this.pesananBaruImg = pesananBaruImg;
+        this.idPesanan = idPesanan;
+        this.StatusPesanan = StatusPesanan;
     }
 
 

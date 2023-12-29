@@ -1,19 +1,26 @@
 package com.example.vokamart.DetailActivity;
 
+// Menggunakan import yang sesuai
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.DetailPesananBaruAdapter;
 import com.example.vokamart.Models.DetailPesanan;
@@ -25,6 +32,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DetailPesananBaru extends AppCompatActivity {
     private DetailPesananBaruAdapter adapter;
@@ -32,8 +41,9 @@ public class DetailPesananBaru extends AppCompatActivity {
     private RecyclerView recyclerView;
     private MPesananBaru MPesananBaru;
     TextView namaPembeli, noHp, Alamat;
-
     private RequestQueue requestQueue;
+    Intent intent;
+    Button btnTerima, btnTolak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +53,60 @@ public class DetailPesananBaru extends AppCompatActivity {
         namaPembeli = findViewById(R.id.nama_pembeli_baru);
         noHp = findViewById(R.id.no_hp_baru);
         Alamat = findViewById(R.id.alamat_baru);
+        btnTerima = findViewById(R.id.btn_terima_pesanan_baru);
+        btnTolak = findViewById(R.id.btn_tolak_pesanan_baru);
+
+        // Menghilangkan penggunaan SharedPreferences yang tidak diperlukan
+        // String pesananid = sharedPreferences.getString("id_pesanan", "");
+
+        intent = getIntent();
+        if (intent != null) {
+            MPesananBaru = (MPesananBaru) intent.getSerializableExtra("dataPesananBaru");
+            if (MPesananBaru != null) {
+                String id = MPesananBaru.getIdPesanan();
+                // Tidak diperlukan lagi karena penggunaan SharedPreferences dihilangkan
+
+                btnTerima.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!TextUtils.isEmpty(id)) {
+                            Toast.makeText(DetailPesananBaru.this, "Produk Berhasil di update", Toast.LENGTH_SHORT).show();
+                            update(id);
+                        } else {
+                            showToast("ID Pesanan tidak valid");
+                        }
+                    }
+
+                    private void update(String id) {
+                        // Menggunakan this sebagai Context karena berada di dalam AppCompatActivity
+                        RequestQueue queue = Volley.newRequestQueue(DetailPesananBaru.this);
+                        String url = "https://vok4mart.000webhostapp.com/UpdatePesananBaruApi.php";
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Toast.makeText(DetailPesananBaru.this, response, Toast.LENGTH_SHORT).show();
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(DetailPesananBaru.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<>();
+                                params.put("id_pesanan", id);
+                                return params;
+                            }
+                        };
+
+                        queue.add(stringRequest);
+                    }
+                });
+            }
+        }
 
         recyclerView = findViewById(R.id.recyler_detail_pesanan_baru);
         recyclerView.setHasFixedSize(true);
@@ -55,73 +119,46 @@ public class DetailPesananBaru extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
         parseJSON();
-
-        Intent intent = getIntent();
-        MPesananBaru = (MPesananBaru) intent.getSerializableExtra("dataPesananBaru");
-
-        // Other initialization code...
-
-        // Assuming you have a valid id_pesanan, replace "YOUR_ID_PESANAN" with the actual value
-        String idPesanan = "ORDR00000001";
-        String url = "https://vok4mart.000webhostapp.com/testUpdatePesanan.php";
-
-        JSONObject params = new JSONObject();
-        try {
-            params.put("id_pesanan", idPesanan);
-            params.put("status_pesanan", "Status PerluDikirim");
-        } catch (JSONException e) {
-            e.printStackTrace();
-            showToast("JSON ERROR");
-            return;
-        }
-
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, params,
-                response -> handleResponse(response),
-                error -> handleError(error));
-
-        requestQueue.add(request);
     }
 
     private void parseJSON() {
         String url = "https://vok4mart.000webhostapp.com/ApiPesananBaru.php";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-                response -> {
-                    try {
-                        if (response != null) {
-                            JSONArray jsonArray = response.getJSONArray("data");
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response != null) {
+                                JSONArray jsonArray = response.getJSONArray("data");
 
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject hit = jsonArray.getJSONObject(i);
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject hit = jsonArray.getJSONObject(i);
 
-                                String imgPesananBaru = hit.getString("gbr_produk");
-                                String alamat = hit.getString("alamat_lengkap");
-                                String imgPerluDikirim = null;
-                                String imgDikirim = null;
-                                String imgSelesai = null;
-                                detailPesanan.add(new DetailPesanan(imgPesananBaru, imgPerluDikirim, imgDikirim, imgSelesai));
-                                Alamat.append(alamat);
+                                    String imgPesananBaru = hit.getString("gbr_produk");
+                                    String alamat = hit.getString("alamat_lengkap");
+                                    String imgPerluDikirim = null;
+                                    String imgDikirim = null;
+                                    String imgSelesai = null;
+                                    detailPesanan.add(new DetailPesanan(imgPesananBaru, imgPerluDikirim, imgDikirim, imgSelesai));
+                                    Alamat.append(alamat);
+                                }
+
+                                adapter.notifyDataSetChanged();
                             }
-
-                            adapter.notifyDataSetChanged();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
                 },
-                error -> error.printStackTrace());
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                });
 
         requestQueue.add(request);
-    }
-
-    private void handleResponse(JSONObject response) {
-        // Handle the response from the server
-        // You may implement this method based on your requirements
-    }
-
-    private void handleError(VolleyError error) {
-        // Handle the error from the server
-        // You may implement this method based on your requirements
     }
 
     private void showToast(String message) {
