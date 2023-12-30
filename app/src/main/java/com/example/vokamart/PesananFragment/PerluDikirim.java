@@ -91,10 +91,11 @@ public class PerluDikirim extends Fragment {
                                     String alamatLengkap = hit.getString("alamat_lengkap"); // Ganti dengan nama kolom yang sesuai
                                     int totalHarga = hit.getInt("sub_total");
                                     String pesananPerluDikirimImg = hit.getString("gbr_produk");
+                                    String idPesanan = hit.getString("id_pesanan");
                                     // You can add more fields as needed
 
                                     // Create and add data to pesananArrayList
-                                    arrayPerluDikirim.add(new MPerluDikirim(namaProduk, alamatLengkap, totalHarga, pesananPerluDikirimImg));
+                                    arrayPerluDikirim.add(new MPerluDikirim(namaProduk, alamatLengkap, totalHarga, pesananPerluDikirimImg, idPesanan));
                                 }
 
                                 // Notify the adapter that the data has changed

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.DetailPesananBaruAdapter;
 import com.example.vokamart.Models.DetailPesanan;
 import com.example.vokamart.Models.MPesananBaru;
+import com.example.vokamart.PesananFragment.FPesananBaru;
+import com.example.vokamart.PesananFragment.PerluDikirim;
 import com.example.vokamart.R;
 
 import org.json.JSONArray;
@@ -87,6 +90,15 @@ public class DetailPesananBaru extends AppCompatActivity {
                                     @Override
                                     public void onResponse(String response) {
                                         Toast.makeText(DetailPesananBaru.this, response, Toast.LENGTH_SHORT).show();
+
+                                        navigateToPesananBaruFragment();
+                                    }
+
+                                    private void navigateToPesananBaruFragment() {
+                                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                        transaction.replace(R.id.recycler_pesanan, new PerluDikirim());
+                                        transaction.addToBackStack(null);
+                                        transaction.commit();
                                     }
                                 }, new Response.ErrorListener() {
                             @Override
@@ -105,6 +117,55 @@ public class DetailPesananBaru extends AppCompatActivity {
                         queue.add(stringRequest);
                     }
                 });
+
+            btnTolak.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (!TextUtils.isEmpty(id)) {
+                        Toast.makeText(DetailPesananBaru.this, "Produk Berhasil di update", Toast.LENGTH_SHORT).show();
+                        tolak(id);
+                    } else {
+                        showToast("ID Pesanan tidak valid");
+                    }
+                }
+
+                private void tolak(String id) {
+                    // Menggunakan this sebagai Context karena berada di dalam AppCompatActivity
+                    RequestQueue queue = Volley.newRequestQueue(DetailPesananBaru.this);
+                    String url = "https://vok4mart.000webhostapp.com/BatalkanPesananApi.php";
+
+                    StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+                                    Toast.makeText(DetailPesananBaru.this, response, Toast.LENGTH_SHORT).show();
+
+                                    navigateToPesananBaruFragment();
+                                }
+
+                                private void navigateToPesananBaruFragment() {
+                                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                                    transaction.replace(R.id.recycler_pesanan, new PerluDikirim());
+                                    transaction.addToBackStack(null);
+                                    transaction.commit();
+                                }
+                            }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Toast.makeText(DetailPesananBaru.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }) {
+                        @Override
+                        protected Map<String, String> getParams() {
+                            Map<String, String> params = new HashMap<>();
+                            params.put("id_pesanan", id);
+                            return params;
+                        }
+                    };
+
+                    queue.add(stringRequest);
+                }
+            });
             }
         }
 
