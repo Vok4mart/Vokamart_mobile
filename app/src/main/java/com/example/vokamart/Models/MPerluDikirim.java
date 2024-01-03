@@ -10,13 +10,24 @@ public class MPerluDikirim implements Serializable {
     private int harga_produk;
     private String pesananPerluDikirimImg;
 
+    public String getIdPesanan() {
+        return idPesanan;
+    }
 
-    public MPerluDikirim(String nama_produk, String alamat_lengkap, int harga_produk, String pesananPerluDikirimImg){
+    public void setIdPesanan(String idPesanan) {
+        this.idPesanan = idPesanan;
+    }
+
+    private String idPesanan;
+
+
+    public MPerluDikirim(String nama_produk, String alamat_lengkap, int harga_produk, String pesananPerluDikirimImg, String idPesanan){
         this.nama_produk = nama_produk;
         this.alamat_lengkap = alamat_lengkap;
         this.kurir = kurir;
         this.harga_produk =harga_produk;
         this.pesananPerluDikirimImg = pesananPerluDikirimImg;
+        this.idPesanan = idPesanan;
     }
 
     public String getNama_produk() {

@@ -70,7 +70,7 @@ public class PerluDikirim extends Fragment {
     }
 
     private void parseJSON() {
-        String url = "https://vok4mart.000webhostapp.com/ApiPesananBaru.php";
+        String url = "https://vok4mart.000webhostapp.com/ApiPesananPerluDikirim.php";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -91,10 +91,11 @@ public class PerluDikirim extends Fragment {
                                     String alamatLengkap = hit.getString("alamat_lengkap"); // Ganti dengan nama kolom yang sesuai
                                     int totalHarga = hit.getInt("sub_total");
                                     String pesananPerluDikirimImg = hit.getString("gbr_produk");
+                                    String idPesanan = hit.getString("id_pesanan");
                                     // You can add more fields as needed
 
                                     // Create and add data to pesananArrayList
-                                    arrayPerluDikirim.add(new MPerluDikirim(namaProduk, alamatLengkap, totalHarga, pesananPerluDikirimImg));
+                                    arrayPerluDikirim.add(new MPerluDikirim(namaProduk, alamatLengkap, totalHarga, pesananPerluDikirimImg, idPesanan));
                                 }
 
                                 // Notify the adapter that the data has changed

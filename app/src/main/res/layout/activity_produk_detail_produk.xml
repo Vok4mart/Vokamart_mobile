@@ -201,8 +201,6 @@
             android:background="@drawable/button_primary"
             android:textColor="@color/white"
             android:layout_marginStart="15dp"/>
-
-
     </LinearLayout>
 
 
