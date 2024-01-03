@@ -24,6 +24,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.DetailPesananBaruAdapter;
+import com.example.vokamart.MainFamily.pesanan;
 import com.example.vokamart.Models.DetailPesanan;
 import com.example.vokamart.Models.MPesananBaru;
 import com.example.vokamart.PesananFragment.FPesananBaru;
@@ -73,7 +74,7 @@ public class DetailPesananBaru extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         if (!TextUtils.isEmpty(id)) {
-                            Toast.makeText(DetailPesananBaru.this, "Produk Berhasil di update", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(DetailPesananBaru.this, "pesanan Berhasil di update", Toast.LENGTH_SHORT).show();
                             update(id);
                         } else {
                             showToast("ID Pesanan tidak valid");
@@ -96,7 +97,7 @@ public class DetailPesananBaru extends AppCompatActivity {
 
                                     private void navigateToPesananBaruFragment() {
                                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                                        transaction.replace(R.id.recycler_pesanan, new PerluDikirim());
+                                        transaction.replace(R.id.recycler_pesanan, new pesanan());
                                         transaction.addToBackStack(null);
                                         transaction.commit();
                                     }
@@ -122,7 +123,7 @@ public class DetailPesananBaru extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (!TextUtils.isEmpty(id)) {
-                        Toast.makeText(DetailPesananBaru.this, "Produk Berhasil di update", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetailPesananBaru.this, "pesana Berhasil dibatalkan", Toast.LENGTH_SHORT).show();
                         tolak(id);
                     } else {
                         showToast("ID Pesanan tidak valid");
@@ -145,7 +146,7 @@ public class DetailPesananBaru extends AppCompatActivity {
 
                                 private void navigateToPesananBaruFragment() {
                                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                                    transaction.replace(R.id.recycler_pesanan, new PerluDikirim());
+                                    transaction.replace(R.id.recycler_pesanan, new pesanan());
                                     transaction.addToBackStack(null);
                                     transaction.commit();
                                 }
@@ -183,7 +184,7 @@ public class DetailPesananBaru extends AppCompatActivity {
     }
 
     private void parseJSON() {
-        String url = "https://vok4mart.000webhostapp.com/ApiPesananBaru.php";
+        String url = "https://vok4mart.000webhostapp.com/ApiPesananBaru.php?id_pesanan=" + MPesananBaru.getIdPesanan();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
