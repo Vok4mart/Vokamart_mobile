@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FPesananBaru extends Fragment {
     private PesananBaru adapter;
@@ -36,11 +37,13 @@ public class FPesananBaru extends Fragment {
     private RecyclerView recyclerView;
     private RequestQueue requestQueue;
     private View rootView;
+    private SearchView search;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_pesanan_baru, container, false);
 
+        search = rootView.findViewById(R.id.cari_pesanan);
         recyclerView = rootView.findViewById(R.id.recycler_pesanan);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -57,6 +60,29 @@ public class FPesananBaru extends Fragment {
         } else {
             Toast.makeText(getContext(), "Konteks null", Toast.LENGTH_SHORT).show();
         }
+
+        search.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                NewOrderFilter(newText);
+                return false;
+            }
+
+            private void NewOrderFilter(String newText) {
+                List<MPesananBaru> filterList = new ArrayList<>();
+                for (MPesananBaru item : pesananArrayList){
+                    if (item.getNama_produk().toLowerCase().contains(newText.toLowerCase())){
+                        filterList.add(item);
+                    }
+                }
+                adapter.NewOrderFilter(filterList);
+            }
+        });
 
         return rootView;
     }

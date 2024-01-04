@@ -5,13 +5,15 @@ import java.io.Serializable;
 public class MSelesai implements Serializable {
     private String nama_produk, alamat_lengkap, kurir;
     private int harga_produk;
+    private String gbr;
 
 
-    public MSelesai(String nama_produk, String alamat_lengkap, int harga_produk){
+    public MSelesai(String nama_produk, String alamat_lengkap, int harga_produk, String gbr){
         this.nama_produk = nama_produk;
         this.alamat_lengkap = alamat_lengkap;
         this.kurir = kurir;
         this.harga_produk =harga_produk;
+        this.gbr = gbr;
     }
 
     public String getNama_produk() {
@@ -44,5 +46,13 @@ public class MSelesai implements Serializable {
 
     public void setHarga_produk(int harga_produk) {
         this.harga_produk = harga_produk;
+    }
+
+    public String getGbr() {
+        return gbr;
+    }
+
+    public void setGbr(String gbr) {
+        this.gbr = gbr;
     }
 }

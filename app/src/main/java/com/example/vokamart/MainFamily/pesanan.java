@@ -19,8 +19,6 @@ public class pesanan extends Fragment {
     private ViewPager2 viewPager;
     private ViewPageAdapter adapter;
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

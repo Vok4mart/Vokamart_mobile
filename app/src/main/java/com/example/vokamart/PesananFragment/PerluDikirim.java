@@ -3,6 +3,7 @@ package com.example.vokamart.PesananFragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,11 +20,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.vokamart.Adapter.AdapterPerluDikirim;
-import com.example.vokamart.Adapter.PesananBaru;
-import com.example.vokamart.DetailActivity.DetailPesananBaru;
 import com.example.vokamart.DetailActivity.DetailPesananPerluDikirim;
 import com.example.vokamart.Models.MPerluDikirim;
-import com.example.vokamart.Models.MPesananBaru;
 import com.example.vokamart.R;
 
 import org.json.JSONArray;
@@ -31,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PerluDikirim extends Fragment {
 
@@ -39,11 +38,13 @@ public class PerluDikirim extends Fragment {
     private View rootView;
     private RecyclerView recyclerView;
     private RequestQueue requestQueue;
+    private SearchView search2;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_pesanan_perlu_dikirim, container, false);
 
+        search2 = rootView.findViewById(R.id.cari_pesanan_perlu_dikirim);
         recyclerView = rootView.findViewById(R.id.recycler_pesanan_perlu_dikirim);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -60,6 +61,28 @@ public class PerluDikirim extends Fragment {
             Toast.makeText(getContext(), "Konteks null", Toast.LENGTH_SHORT).show();
         }
 
+        search2.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                FilterPerluDikirim(newText);
+                return false;
+            }
+
+            private void FilterPerluDikirim(String newText) {
+                List<MPerluDikirim> filterList = new ArrayList<>();
+                for (MPerluDikirim item : arrayPerluDikirim){
+                    if (item.getNama_produk().toLowerCase().contains(newText.toLowerCase())){
+                        filterList.add(item);
+                    }
+                }
+                adapterPerluDikirim.FilterPerluDikirim(filterList);
+            }
+        });
         return rootView;
     }
 
