@@ -89,6 +89,7 @@ public class Login extends AppCompatActivity {
                         editor.putString("email", res.getString("email_akun"));
                         editor.putString("level", res.getString("user_level"));
                         editor.putString("nama", res.getString("nama_akun"));
+                        editor.putString("foto", res.getString("foto_profil"));
                         editor.apply();
 
                         startActivity(new Intent(Login.this, Navbar.class));
