@@ -79,12 +79,12 @@
             app:boxCornerRadiusTopStart="10dp">
 
             <EditText
-                android:id="@+id/email_profil"
+                android:id="@+id/nama_profil"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:fontFamily="@font/lexendregular"
-                android:hint="Email"
-                android:inputType="textEmailAddress" />
+                android:hint="Nama"
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -98,13 +98,14 @@
             app:boxCornerRadiusTopStart="10dp">
 
             <EditText
-                android:id="@+id/nama_profil"
+                android:id="@+id/email_profil"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:fontFamily="@font/lexendregular"
-                android:hint="Nama"
-                android:inputType="text" />
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/ubah_profil"
@@ -113,6 +114,16 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/button_primary"
             android:text="ubah"
+            android:fontFamily="@font/lexendbold"
+            android:textColor="@color/white"/>
+
+        <Button
+            android:id="@+id/hapus_akun"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/button_primary"
+            android:text="Hapus Akun"
             android:fontFamily="@font/lexendbold"
             android:textColor="@color/white"/>
 
