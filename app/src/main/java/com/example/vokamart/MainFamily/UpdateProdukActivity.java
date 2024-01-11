@@ -49,7 +49,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class tambah_produk extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class UpdateProdukActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private ArrayList<kategoriList> kategoriList;
     private SpinnerAdapter adapter;
@@ -113,41 +113,12 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
     }
     private void opengallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-//        galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-//        galleryIntent.addCategory(Intent.CATEGORY_OPENABLE);
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
     }
 
 
 
-//    private void handleImageSelection(android.net.Uri imageUri) {
-//        try {
-//            // Check if the image is already selected
-//            String uriString = imageUri.toString();
-//            if (!selectedImageUris.contains(uriString)) {
-//                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
-//
-//                // Set the selected image to the current ImageView
-//                if (currentImageIndex < MAX_IMAGES) {
-//                    imageViews[currentImageIndex].setImageBitmap(bitmap);
-//
-//                    // Add the URI to the set of selected image URIs
-//                    selectedImageUris.add(uriString);
-//                    imageViews[currentImageIndex].setTag(uriString); // Tag the ImageView with the URI
-//
-//                    currentImageIndex++;
-//                } else {
-//                    Toast.makeText(this, "You can select up to " + MAX_IMAGES + " images", Toast.LENGTH_SHORT).show();
-//                }
-//            } else {
-//                Toast.makeText(this, "Image already selected", Toast.LENGTH_SHORT).show();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            Log.e("ImageSelection", "Error loading image: " + e.getMessage());
-//        }
-//    }
 
     private void clearImageView(int index) {
         if (index >= 0 && index < imageViews.length) {
@@ -275,7 +246,7 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
             String categoryName = selectedCategory.getNama_kategori();
             Log.d("ItemSelected", "Category selected: " + categoryId);
             // Perform any actions based on the selected category
-            Toast.makeText(tambah_produk.this, "Category selected: " + categoryName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(UpdateProdukActivity.this, "Category selected: " + categoryName, Toast.LENGTH_SHORT).show();
         }
     }
 

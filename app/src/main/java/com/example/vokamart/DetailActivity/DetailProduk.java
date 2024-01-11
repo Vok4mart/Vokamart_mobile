@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.example.vokamart.LoginFamily.Login;
+import com.example.vokamart.MainFamily.UpdateProdukActivity;
 import com.example.vokamart.MainFamily.list_produk;
 import com.example.vokamart.Models.produk;
 import com.example.vokamart.Navbar;
@@ -105,9 +106,8 @@ public class DetailProduk extends AppCompatActivity {
                 btnEdt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Add your logic for handling the edit button click
-                        // You may navigate to the edit activity or perform other actions
-                        // based on your application requirements.
+                        Intent i = new Intent(DetailProduk.this, UpdateProdukActivity.class);
+                        startActivity(i);
                     }
                 });
             }

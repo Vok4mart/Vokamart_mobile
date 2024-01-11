@@ -75,11 +75,6 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
         btnCancel = findViewById(R.id.Btn_Cancel);
         btnTambah = findViewById(R.id.btn_tambah_produk);
         iv1 = findViewById(R.id.img1);
-//        iv2 = findViewById(R.id.img2);
-//        iv3 = findViewById(R.id.img3);
-//        iv4 = findViewById(R.id.img4);
-//        iv5 = findViewById(R.id.img5);
-//        imageViews = new ImageView[]{iv1, iv2, iv3, iv4, iv5};
         imageViews = new ImageView[]{iv1};
 
         etBerat = findViewById(R.id.edit_berat);
