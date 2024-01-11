@@ -3,19 +3,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".PesananFragment.PerluDikirim">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/cari_pesanan_perlu_dikirim"
+            android:layout_width="wrap_content"
+            android:layout_height="49dp"
+            android:layout_marginTop="65dp"
+            android:layout_gravity="top|center_horizontal"
+            android:background="@drawable/search_border"
+            app:queryHint="Pencarian"
+            android:fontFamily="@font/lexendregular"
+            android:textSize="15sp"
+            app:iconifiedByDefault="false"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_pesanan_perlu_dikirim"
-            android:layout_marginTop="65dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             tools:listitem="@layout/card_item_pesanan"/>
     </LinearLayout>
-
 </FrameLayout>

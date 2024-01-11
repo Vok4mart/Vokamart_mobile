@@ -30,7 +30,6 @@
 
     </LinearLayout>
 
-
     <View
         android:id="@+id/view_garis_pesanan"
         android:layout_width="match_parent"
@@ -38,30 +37,10 @@
         android:background="@color/GreyText"
         android:layout_below="@id/header_pesanan"/>
 
-    <androidx.appcompat.widget.SearchView
-        android:layout_below="@id/view_garis_pesanan"
-        android:layout_marginTop="10dp"
-        android:id="@+id/cari_pesanan"
-        android:layout_width="match_parent"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_height="49dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/search_border"
-        android:height="60dp"
-        android:inputType="text"
-        android:hint="Pencarian"
-        android:autofillHints="name"
-        android:fontFamily="@font/lexendregular"
-        android:textSize="15sp"
-        android:paddingStart="8dp"/>
-
-
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/TabLayoutPesanan"
         android:layout_marginTop="10dp"
-        android:layout_below="@id/cari_pesanan"
+        android:layout_below="@id/view_garis_pesanan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabMode="scrollable"
@@ -91,12 +70,11 @@
             android:layout_height="wrap_content"
             android:text="Selesai"/>
 
-
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager2.widget.ViewPager2
-        android:layout_below="@id/cari_pesanan"
         android:id="@+id/viewPager"
+        android:layout_below="@id/view_garis_pesanan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

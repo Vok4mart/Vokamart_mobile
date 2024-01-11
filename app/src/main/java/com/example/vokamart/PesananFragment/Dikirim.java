@@ -3,6 +3,7 @@ package com.example.vokamart.PesananFragment;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Dikirim extends Fragment {
@@ -42,11 +44,13 @@ public class Dikirim extends Fragment {
     private RecyclerView recyclerView;
     private RequestQueue requestQueue;
     private View rootView;
+    private SearchView search3;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_pesanan_dikirim, container, false);
         recyclerView = rootView.findViewById(R.id.recycler_pesanan_dikirim);
+        search3 = rootView.findViewById(R.id.cari_pesanan_dikirim);
 
         if (recyclerView != null) {
             recyclerView.setHasFixedSize(true);
@@ -66,6 +70,29 @@ public class Dikirim extends Fragment {
         } else {
             Toast.makeText(getContext(), "RecyclerView is null", Toast.LENGTH_SHORT).show();
         }
+
+        search3.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                OrderDikirim(newText);
+                return false;
+            }
+
+            private void OrderDikirim(String newText) {
+                List<MDikirim> filterList = new ArrayList<>();
+                for (MDikirim item : pesananDikirim){
+                    if (item.getNama_produk().toLowerCase().contains(newText.toLowerCase())){
+                        filterList.add(item);
+                    }
+                }
+                adapter.OrderDikirim(filterList);
+            }
+        });
 
         return rootView;
     }
@@ -97,10 +124,11 @@ public class Dikirim extends Fragment {
                                     String namaProduk = hit.getString("Nama_produk");
                                     String alamatLengkap = hit.getString("alamat_lengkap"); // Ganti dengan nama kolom yang sesuai
                                     int totalHarga = hit.getInt("sub_total");
+                                    String img_product = hit.getString("gbr_produk");
                                     // You can add more fields as needed
 
                                     // Create and add data to pesananArrayList
-                                    pesananDikirim.add(new MDikirim(namaProduk, alamatLengkap, totalHarga));
+                                    pesananDikirim.add(new MDikirim(namaProduk, alamatLengkap, totalHarga, img_product));
                                 }
 
                                 // Notify the adapter that the data has changed

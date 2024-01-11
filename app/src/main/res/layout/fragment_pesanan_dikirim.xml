@@ -7,17 +7,24 @@
     tools:context=".PesananFragment.Dikirim">
 
     <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/cari_pesanan_dikirim"
+        android:layout_width="wrap_content"
+        android:layout_height="49dp"
+        android:layout_marginTop="65dp"
+        android:layout_gravity="top|center_horizontal"
+        android:background="@drawable/search_border"
+        app:queryHint="Pencarian"
+        android:fontFamily="@font/lexendregular"
+        android:textSize="15sp"
+        app:iconifiedByDefault="false"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_pesanan_dikirim"
-            android:layout_marginTop="65dp"
+            android:layout_marginTop="115dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/card_item_pesanan"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-    </LinearLayout>
 
 </FrameLayout>

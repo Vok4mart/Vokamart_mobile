@@ -14,10 +14,11 @@ import com.example.vokamart.Models.MPesananBaru;
 import com.example.vokamart.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PesananBaru extends RecyclerView.Adapter<PesananBaru.MyViewHolder>{
 
-    private static ArrayList<MPesananBaru> MPesananBaru;
+    private static ArrayList<MPesananBaru> mPesananBaru;
     private static Context context;
     public ClickListener clickListener;
 
@@ -26,7 +27,7 @@ public class PesananBaru extends RecyclerView.Adapter<PesananBaru.MyViewHolder>{
     }
 
     public PesananBaru(ArrayList<MPesananBaru> Mpesanan_baru, Context context, ClickListener clickListener) {
-        this.MPesananBaru = Mpesanan_baru;
+        this.mPesananBaru = Mpesanan_baru;
         this.context = context;
         this.clickListener = clickListener;
     }
@@ -41,7 +42,7 @@ public class PesananBaru extends RecyclerView.Adapter<PesananBaru.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        MPesananBaru pesanan = MPesananBaru.get(position);
+        MPesananBaru pesanan = mPesananBaru.get(position);
 
         holder.nama_produk.setText(pesanan.getNama_produk());
         holder.alamat_lengkap.setText(pesanan.getAlamat_lengkap());
@@ -64,7 +65,12 @@ public class PesananBaru extends RecyclerView.Adapter<PesananBaru.MyViewHolder>{
 
     @Override
     public int getItemCount() {
-        return MPesananBaru.size();
+        return mPesananBaru.size();
+    }
+
+    public void NewOrderFilter(List<MPesananBaru> filteredList){
+        mPesananBaru = (ArrayList<MPesananBaru>) filteredList;
+        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
