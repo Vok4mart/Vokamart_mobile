@@ -38,7 +38,7 @@ public class UbahProfil extends AppCompatActivity {
     private EditText etEmail, etNama;
     private RoundedImageView Profil;
     private Bitmap imageBitmap;
-    private Button btnUbahProfil, btnHapusAkun;
+    private Button btnUbahProfil;
     private ImageView foto_profile;
 
     private SharedPreferences preferences;
@@ -54,7 +54,6 @@ public class UbahProfil extends AppCompatActivity {
         etNama = findViewById(R.id.nama_profil);
         etEmail = findViewById(R.id.email_profil);
         foto_profile = findViewById(R.id.img_profil);
-        btnHapusAkun = findViewById(R.id.hapus_akun);
 
         Profil.setOnClickListener(new View.OnClickListener() {
             @Override
