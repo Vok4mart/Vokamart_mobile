@@ -205,7 +205,6 @@
                 android:padding="5dp"
                 android:spinnerMode="dropdown" />
 
-
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
                 android:layout_width="match_parent"

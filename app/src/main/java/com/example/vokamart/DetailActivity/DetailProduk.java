@@ -102,14 +102,26 @@ public class DetailProduk extends AppCompatActivity {
                     }
                 });
 
-                // Set click listener for edit button
                 btnEdt.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        produk produkObject = new produk(
+                                idProduk,
+                                Produk.getNama(),
+                                Produk.getHarga(),
+                                Produk.getStok(),
+                                Produk.getDeskripsi_produk(),
+                                Produk.getMimageUrl(),
+                                Produk.getBerat(),
+                                Produk.getId_katergori(),
+                                Produk.getNama_kategori()
+                        );
+
                         Intent i = new Intent(DetailProduk.this, UpdateProdukActivity.class);
+                        i.putExtra("data", produkObject);  // Assuming produk is a Parcelable or Serializable object
                         startActivity(i);
                     }
-                });
+            });
             }
         }
     }

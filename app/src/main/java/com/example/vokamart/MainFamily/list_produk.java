@@ -114,7 +114,7 @@ public class list_produk extends Fragment implements ProductAdapter.ClickListene
                             public void onResponse(JSONObject response) {
                                 try {
                                     if (response != null) {
-                                        JSONArray jsonArray = response.getJSONArray("result");
+                                        JSONArray jsonArray = response.getJSONArray("data");
 
                                         for (int i = 0; i < jsonArray.length(); i++) {
                                             JSONObject hit = jsonArray.getJSONObject(i);
@@ -125,8 +125,11 @@ public class list_produk extends Fragment implements ProductAdapter.ClickListene
                                             String id = hit.getString("id_produk");
                                             String deskripsiProduk = hit.getString("deskripsi_produk");
                                             String imageUrl = hit.getString("gbr_produk");
+                                            int berat = hit.getInt("berat");
+                                            String id_kategori = hit.getString("id_kategori");
+                                            String nama_kategori = hit.getString("nama_kategori");
 
-                                            produkArrayList.add(new produk(id,nama, harga, stok, deskripsiProduk, imageUrl));
+                                            produkArrayList.add(new produk(id,nama, harga, stok, deskripsiProduk, imageUrl, berat, id_kategori, nama_kategori));
                                         }
 
                                         // Setelah mendapatkan data, panggil notifyDataSetChanged() pada adapter
@@ -134,15 +137,18 @@ public class list_produk extends Fragment implements ProductAdapter.ClickListene
 
                                         // Simpan data terakhir dari loop
                                         if (!produkArrayList.isEmpty()) {
-                                            int lastIndex = produkArrayList.size() - 1;
-                                            produk lastProduk = produkArrayList.get(lastIndex);
+                                            int chosenIndex = 0; // Use 0 to get the first item
+                                            produk chosenProduk = produkArrayList.get(chosenIndex);
 
                                             SharedPreferences.Editor editor = sharedPreferences.edit();
-                                            editor.putString("nama_produk", lastProduk.getNama());
-                                            editor.putInt("harga_produk", lastProduk.getHarga());
-                                            editor.putInt("berat", lastProduk.getStok());
-                                            editor.putString("deskripsi_produk", lastProduk.getDeskripsi_produk());
-                                            editor.putString("id_produk", lastProduk.getId());
+                                            editor.putString("nama_produk", chosenProduk.getNama());
+                                            editor.putInt("harga_produk", chosenProduk.getHarga());
+                                            editor.putInt("stok", chosenProduk.getStok());
+                                            editor.putString("deskripsi_produk", chosenProduk.getDeskripsi_produk());
+                                            editor.putString("id_produk", chosenProduk.getId());
+                                            editor.putInt("berat", chosenProduk.getBerat());
+                                            editor.putString("id_kategori", chosenProduk.getId_katergori());
+                                            editor.putString("nama_kategori", chosenProduk.getNama_kategori());
                                             editor.apply();
                                         }
                                     } else {

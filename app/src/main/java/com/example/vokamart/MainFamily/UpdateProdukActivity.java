@@ -1,7 +1,9 @@
 package com.example.vokamart.MainFamily;
 
 import android.content.ClipData;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -32,9 +34,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.vokamart.API.Constant;
 import com.example.vokamart.Adapter.SpinnerAdapter;
 import com.example.vokamart.Models.kategoriList;
+import com.example.vokamart.Models.produk;
 import com.example.vokamart.R;
 
 import org.json.JSONArray;
@@ -61,64 +65,112 @@ public class UpdateProdukActivity extends AppCompatActivity implements AdapterVi
     private static final int PICK_IMAGE_REQUEST = 1;
     private Set<String> selectedImageUris = new HashSet<>();
     private Spinner spinner;
-    private EditText etNama, etStok, etHarga, etBerat, etDeskripsi;
+    private EditText etNama, etStok, etHarga, etBerat, etDeskripsi, etNamaKtgr;
     private Bitmap bitmap = null;
+    private SharedPreferences preferences;
+    private Intent intent;
+    private produk Produk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_produk_tambah_produk);
 
+        // Initialize views
+        initializeViews();
+
+        // Fetch data for the spinner
+        fetchDataFromServer();
+
+        // Set values from Intent data
+        setValuesFromIntent();
+
+        // Set up click listeners
+        pickImage();
+//        cancelPicture();
+    }
+
+    private void initializeViews() {
         kategoriList = new ArrayList<>();
-        spinner = findViewById(R.id.spinner_kategori);
+        adapter = new SpinnerAdapter(this, kategoriList);
         btPick = findViewById(R.id.Btn_Pick);
         btnCancel = findViewById(R.id.Btn_Cancel);
         btnTambah = findViewById(R.id.btn_tambah_produk);
         iv1 = findViewById(R.id.img1);
-        imageViews = new ImageView[]{iv1};
-
         etBerat = findViewById(R.id.edit_berat);
         etDeskripsi = findViewById(R.id.edit_deskripsi);
         etHarga = findViewById(R.id.edit_harga_produk);
         etNama = findViewById(R.id.edit_nama_produk);
         etStok = findViewById(R.id.edit_stok);
-
-        adapter = new SpinnerAdapter(this, kategoriList);
-
-        fetchDataFromServer();
+        spinner = findViewById(R.id.spinner_kategori);
         spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this); // Set the listener for item selection
-
-        pickImage();
-
-        btnTambah.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addData();
-            }
-        });
+        spinner.setOnItemSelectedListener(this);
+        imageViews = new ImageView[]{iv1};
     }
 
 
-    private void pickImage() {
+    private void setValuesFromIntent() {
+        intent = getIntent();
+        if (intent != null) {
+            Produk = (produk) intent.getSerializableExtra("data");
+            if (Produk != null) {
+                etNama.setText(Produk.getNama());
+                etHarga.setText(String.valueOf(Produk.getHarga()));
+                etBerat.setText(String.valueOf(Produk.getBerat()));
+                etDeskripsi.setText(Produk.getDeskripsi_produk());
+                etStok.setText(String.valueOf(Produk.getStok()));
 
+                String idProduk = Produk.getId();
+
+                // Set the selected item in the spinner
+//                String namaKategori = Produk.getNama_kategori();
+//                etNamaKtgr
+                String namaKategori = Produk.getNama_kategori();
+                setSpinnerSelection(namaKategori);
+
+                // Load the image using Glide
+                Glide.with(getApplicationContext())
+                        .load(Produk.getMimageUrl())
+                        .placeholder(R.drawable.baseline_fastfood_24)
+                        .into(iv1);
+
+                btnTambah.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        addData(idProduk);
+                    }
+                });
+            }
+        }
+    }
+
+    private void setSpinnerSelection(String selectedItem) {
+        for (int i = 0; i < kategoriList.size(); i++) {
+            if (kategoriList.get(i).getNama_kategori().equals(selectedItem)) {
+                Spinner spinner = findViewById(R.id.spinner_kategori);
+                spinner.setSelection(i);
+                break;
+            }
+        }
+    }
+
+    private void pickImage() {
         btPick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 opengallery();
-                cnclpicture();
             }
         });
 
+        // Call cnclpicture separately
+        cnclpicture();
     }
+
     private void opengallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST);
     }
-
-
-
 
     private void clearImageView(int index) {
         if (index >= 0 && index < imageViews.length) {
@@ -129,22 +181,39 @@ public class UpdateProdukActivity extends AppCompatActivity implements AdapterVi
     }
 
     private void cnclpicture() {
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Reset currentImageIndex to indicate no image is selected
-                currentImageIndex = 0;
+        if (btnCancel != null) {
+            btnCancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("ButtonClick", "Cancel button clicked");
 
-                // Clear all ImageViews
-                for (ImageView imageView : imageViews) {
-                    imageView.setImageResource(R.drawable.baseline_image_24);
+                    // Reset currentImageIndex to indicate no image is selected
+                    currentImageIndex = 0;
+
+                    // Check if imageViews is not null before accessing it
+                    if (imageViews != null) {
+                        // Clear all ImageViews
+                        for (ImageView imageView : imageViews) {
+                            if (imageView != null) {
+                                imageView.setImageResource(R.drawable.baseline_image_24);
+                            }
+                        }
+                    } else {
+                        Log.e("ImageViews", "ImageViews is null");
+                    }
+
+                    // Check if selectedImageUris is not null before accessing it
+                    if (selectedImageUris != null) {
+                        // Clear the set of selected image URIs
+                        selectedImageUris.clear();
+                    } else {
+                        Log.e("SelectedImageUris", "SelectedImageUris is null");
+                    }
                 }
-
-                // Clear the set of selected image URIs
-                selectedImageUris.clear();
-
-            }
-        });
+            });
+        } else {
+            Log.e("CancelButton", "CancelButton is null");
+        }
     }
 
     private void cancelImageAtIndex(int index) {
@@ -211,12 +280,8 @@ public class UpdateProdukActivity extends AppCompatActivity implements AdapterVi
                             }
 
                             // Notify the adapter that the data set has changed
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    adapter.notifyDataSetChanged();
-                                }
-                            });
+                            adapter.notifyDataSetChanged();
+                            setValuesFromIntent(); // Pindahkan ini ke sini agar dijalankan setelah adapter diupdate
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -232,9 +297,9 @@ public class UpdateProdukActivity extends AppCompatActivity implements AdapterVi
                 }
         );
 
-
         queue.add(jsonObjectRequest);
     }
+
 
 
     @Override
@@ -274,10 +339,10 @@ public class UpdateProdukActivity extends AppCompatActivity implements AdapterVi
         }
     }
 
-    private void addData() {
-        String url = "https://vok4mart.000webhostapp.com/TambahProdukApiTestGambar2.php";
+    private void addData(String id_produk) {
+        String url = "https://vok4mart.000webhostapp.com/update_produk.php";
         try {
-            Map<String, String> params = createParamsMap();
+            Map<String, String> params = createParamsMap(id_produk); // Pass id_produk as a parameter
             Log.d("PARAMS_MAP", "Params: " + params);
 
             StringRequest request = new StringRequest(Request.Method.POST, url, this::handleResponse, this::handleError) {
@@ -294,7 +359,7 @@ public class UpdateProdukActivity extends AppCompatActivity implements AdapterVi
         }
     }
 
-    private Map<String, String> createParamsMap() throws JSONException {
+    private Map<String, String> createParamsMap(String id_produk) throws JSONException {
         Map<String, String> params = new HashMap<>();
 
         // Log values
@@ -302,6 +367,7 @@ public class UpdateProdukActivity extends AppCompatActivity implements AdapterVi
         logValue("Stok", etStok);
         logValue("Berat", etBerat);
 
+        params.put("id_produk", id_produk); // Use the provided id_produk parameter
         params.put("nama_produk", getValue(etNama));
         params.put("harga_produk", String.valueOf(parseIntValue(etHarga)));
         params.put("deskripsi_produk", getValue(etDeskripsi));
