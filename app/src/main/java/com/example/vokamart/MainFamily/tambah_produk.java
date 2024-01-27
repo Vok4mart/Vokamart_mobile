@@ -216,7 +216,7 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
     }
 
     private void fetchDataFromServer() {
-        String url = "https://vok4mart.000webhostapp.com/SpinnerPop.php";
+        String url = "https://vok4mart.000webhostapp.com/Api_mobile/SpinnerPop.php";
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -304,7 +304,7 @@ public class tambah_produk extends AppCompatActivity implements AdapterView.OnIt
     }
 
     private void addData() {
-        String url = "https://vok4mart.000webhostapp.com/TambahProdukApiTestGambar2.php";
+        String url = "https://vok4mart.000webhostapp.com/Api_mobile/apiTambahProduk.php";
         try {
             Map<String, String> params = createParamsMap();
             Log.d("PARAMS_MAP", "Params: " + params);

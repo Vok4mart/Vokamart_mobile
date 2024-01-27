@@ -106,7 +106,7 @@ public class list_produk extends Fragment implements ProductAdapter.ClickListene
             if (getContext() != null) {
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("detail", Context.MODE_PRIVATE);
 
-                String url = "https://vok4mart.000webhostapp.com/ListProductApi.php";
+                String url = "https://vok4mart.000webhostapp.com/Api_mobile/ListProduk.php";
 
                 JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                         new Response.Listener<JSONObject>() {
