@@ -3,6 +3,7 @@ package com.example.vokamart;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -38,7 +39,8 @@ public class    activity_login_lupa_password2 extends AppCompatActivity {
 
         etPass = findViewById(R.id.Edit_Pass_new);
         btnReset = findViewById(R.id.btn_Reset_Pass);
-        fetchEmail = getIntent().getStringExtra("emailAkun");
+        SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        fetchEmail = preferences.getString("emailAkun", null);
 
         btnReset.setOnClickListener(new View.OnClickListener() {
             @Override

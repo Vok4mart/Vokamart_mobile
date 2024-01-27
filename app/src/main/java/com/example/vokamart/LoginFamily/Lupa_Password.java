@@ -3,6 +3,7 @@ package com.example.vokamart.LoginFamily;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -66,6 +67,10 @@ public class Lupa_Password extends AppCompatActivity {
                     Toast.makeText(Lupa_Password.this, "Harap masukkan email yang valid", Toast.LENGTH_SHORT).show();
                 } else {
                     sendOTP(email);
+                    SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("emailAkun", email);
+                    editor.apply();
                 }
 
             }
@@ -84,7 +89,7 @@ public class Lupa_Password extends AppCompatActivity {
                         Toast.makeText(Lupa_Password.this, "Kode OTP valid", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(Lupa_Password.this, activity_login_lupa_password2.class);
 
-                        i.putExtra("emailAkun", email);
+
                         startActivity(i);
 
                     }else{
