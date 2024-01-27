@@ -58,14 +58,14 @@ public class Lupa_Password extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                email = Objects.requireNonNull(etEmail.getText()).toString();
+                String email = Objects.requireNonNull(etEmail.getText()).toString();
 
                 if (email.isEmpty()) {
                     Toast.makeText(Lupa_Password.this, "Harap isi field!", Toast.LENGTH_SHORT).show();
                 } else if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     Toast.makeText(Lupa_Password.this, "Harap masukkan email yang valid", Toast.LENGTH_SHORT).show();
                 } else {
-                    checkEmailRegistered(email);
+                    sendOTP(email);
                 }
 
             }
@@ -96,7 +96,7 @@ public class Lupa_Password extends AppCompatActivity {
 
     }
     private void checkEmailRegistered(String email) {
-        String url = "https://vok4mart.000webhostapp.com/CheckEmail.php";
+        String url = "https://vok4mart.000webhostapp.com/Api_mobile/CheckEmail.php";
 
         JSONObject jsonRequest = new JSONObject();
         try {
@@ -148,8 +148,8 @@ public class Lupa_Password extends AppCompatActivity {
         generatedOTP = otpGenerator.generateOTP(6);
         String OTP = generatedOTP;
         EmailSender.sendEmail(email, generatedOTP);
-        Toast.makeText(this, "OTP berhasil dikirim ke email", Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, OTP, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "OTP berhasil dikirim ke email", Toast.LENGTH_SHORT).show();
+         Toast.makeText(this, OTP, Toast.LENGTH_SHORT).show();
     }
 
 

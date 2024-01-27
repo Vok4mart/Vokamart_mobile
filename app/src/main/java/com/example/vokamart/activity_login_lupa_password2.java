@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class activity_login_lupa_password2 extends AppCompatActivity {
+public class    activity_login_lupa_password2 extends AppCompatActivity {
 
     private EditText etPass;
     private Button btnReset;
@@ -45,8 +45,17 @@ public class activity_login_lupa_password2 extends AppCompatActivity {
             public void onClick(View v) {
                 String pass = etPass.getText().toString().trim();
                 sendPasswordToServer(pass, fetchEmail);
-                Log.d("pass", pass);
-                Log.d("fetch", fetchEmail);
+                if (pass != null) {
+                    Log.d("pass", pass);
+                } else {
+                    Log.d("pass", "pass is null");
+                }
+
+                if (fetchEmail != null) {
+                    Log.d("fetch", fetchEmail);
+                } else {
+                    Log.d("fetch", "fetchEmail is null");
+                }
             }
         });
     }
@@ -98,7 +107,7 @@ public class activity_login_lupa_password2 extends AppCompatActivity {
 //    }
 
     private void sendPasswordToServer(String newPassword, String fetchEmail) {
-        String url = "https://vok4mart.000webhostapp.com/updatePass.php";
+        String url = "https://vok4mart.000webhostapp.com/Api_mobile/updatePass.php";
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
@@ -120,8 +129,13 @@ public class activity_login_lupa_password2 extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 // Masukkan parameter ke dalam body permintaan POST
                 Map<String, String> params = new HashMap<>();
-                params.put("email_akun", fetchEmail);
-                params.put("password", newPassword);
+                if (newPassword != null) {
+                    params.put("password", newPassword);
+                }
+
+                if (fetchEmail != null) {
+                    params.put("email_akun", fetchEmail);
+                }
                 return params;
             }
         };

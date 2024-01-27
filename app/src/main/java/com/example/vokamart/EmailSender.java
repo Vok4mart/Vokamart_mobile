@@ -14,7 +14,7 @@ import javax.mail.internet.MimeMessage;
 public class EmailSender {
 
     private static final String SENDER_EMAIL = "vok4martotp@gmail.com"; //change ur email
-    private static final String SENDER_PASSWORD = "aryxwxyvicwzzecl"; //change ur password
+    private static final String SENDER_PASSWORD = "fvweriavtlovavxl"; //change ur password
     private static final String EMAIL_SUBJECT = "Verification Code";
 
     private static Properties properties;
