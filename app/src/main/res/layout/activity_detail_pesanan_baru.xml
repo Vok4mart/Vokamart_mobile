@@ -56,17 +56,67 @@
             android:text="Detail Produk"
             android:fontFamily="@font/lexendregular"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyler_detail_pesanan_baru"
-            android:layout_marginTop="10dp"
+
+<!--        <androidx.recyclerview.widget.RecyclerView-->
+<!--            android:id="@+id/recyler_detail_pesanan_baru"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+    </LinearLayout>
+
+        <View
+            android:id="@+id/garis_bawah_detail_prok"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:background="@color/GreyText"/>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Barang"
+            android:textSize="15sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/lexendbold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="jumlah Barang"
+                android:textSize="10sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/lexendbold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Harga Satuan"
+                android:textSize="8sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/lexendbold"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total Barang"
+                android:textSize="13sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/lexendbold"/>
     </LinearLayout>
 
     <View
         android:id="@+id/garis_bawah_detail_produk"
         android:layout_width="wrap_content"
         android:layout_height="2dp"
+        android:layout_marginTop="200dp"
         android:background="@color/GreyText"/>
 
     <TextView
