@@ -96,7 +96,7 @@ public class UbahProfil extends AppCompatActivity {
 
     private void EditProfil(String id) {
         RequestQueue queue = Volley.newRequestQueue(UbahProfil.this);
-        String url = "https://vok4mart.000webhostapp.com/editProfil.php";  // Set your URL here
+        String url = "https://vok4mart.000webhostapp.com/Api_mobile/edit_profil_api.php";  // Set your URL here
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {

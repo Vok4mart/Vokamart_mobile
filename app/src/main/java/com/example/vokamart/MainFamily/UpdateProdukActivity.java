@@ -256,7 +256,7 @@ public class UpdateProdukActivity extends AppCompatActivity implements AdapterVi
     }
 
     private void fetchDataFromServer() {
-        String url = "https://vok4mart.000webhostapp.com/SpinnerPop.php";
+        String url = "https://vok4mart.000webhostapp.com/Api_mobile/SpinnerPop.php";
 
         RequestQueue queue = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
@@ -321,12 +321,11 @@ public class UpdateProdukActivity extends AppCompatActivity implements AdapterVi
         Log.d("ItemSelected", "Nothing selected");
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             Uri imgUri = data.getData();
             iv1.setImageURI(imgUri);
 
@@ -335,17 +334,64 @@ public class UpdateProdukActivity extends AppCompatActivity implements AdapterVi
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK) {
+//            Uri imgUri = data.getData();
+//            iv1.setImageURI(imgUri);
+//
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imgUri);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//    }
+
+//    private void addData(String id_produk) {
+//        String url = "https://vok4mart.000webhostapp.com/Api_mobile/update_produk.php";
+//        try {
+//            Map<String, String> params = createParamsMap(id_produk); // Pass id_produk as a parameter
+//            Log.d("PARAMS_MAP", "Params: " + params);
+//
+//            StringRequest request = new StringRequest(Request.Method.POST, url, this::handleResponse, this::handleError) {
+//                @Override
+//                protected Map<String, String> getParams() {
+//                    return params;
+//                }
+//            };
+//
+//            Volley.newRequestQueue(getApplicationContext()).add(request);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            showToast("JSON ERROR");
+//        }
+//    }
+
     private void addData(String id_produk) {
-        String url = "https://vok4mart.000webhostapp.com/update_produk.php";
+        String url = "https://vok4mart.000webhostapp.com/Api_mobile/update_produk.php";
         try {
             Map<String, String> params = createParamsMap(id_produk); // Pass id_produk as a parameter
             Log.d("PARAMS_MAP", "Params: " + params);
 
-            StringRequest request = new StringRequest(Request.Method.POST, url, this::handleResponse, this::handleError) {
+            StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    handleResponse(response);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    handleError(error);
+                }
+            }) {
                 @Override
                 protected Map<String, String> getParams() {
                     return params;
