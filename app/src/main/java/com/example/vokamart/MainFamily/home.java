@@ -2,6 +2,7 @@ package com.example.vokamart.MainFamily;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -27,14 +28,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class home extends Fragment {
-    private TextView txt_name;
+    private TextView txtName;
     private View view;
     private SharedPreferences preferences;
+    private BarChart barChart;
 
     @Nullable
     @Override
@@ -42,63 +48,98 @@ public class home extends Fragment {
         view = inflater.inflate(R.layout.fragment_main_home, container, false);
 
         init();
-
-        barchart();
+        new FetchDataTask().execute(); // Ambil data dari API
 
         return view;
     }
 
     private void init() {
-        txt_name = view.findViewById(R.id.txt_name_user);
+        txtName = view.findViewById(R.id.txt_name_user);
         preferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
 
         String nameLogin = preferences.getString("nama", "-");
-        txt_name.setText(nameLogin);
-    }
-
-    private void barchart() {
-
-        BarChart barChart;
-
-        List<String> xValues = Arrays.asList("Desember", "Januari", "Februari", "Maret");
+        txtName.setText(nameLogin);
 
         barChart = view.findViewById(R.id.barchart);
+
+        // Set layout parameters to make the BarChart smaller
+//        ViewGroup.LayoutParams params = barChart.getLayoutParams();
+//        params.width = 600;  // Set your desired width
+//        params.height = 400; // Set your desired height
+//        barChart.setLayoutParams(params);
+//;
         barChart.getAxisRight().setDrawLabels(false);
+    }
 
-        ArrayList <BarEntry> Entries = new ArrayList<>();
-        Entries.add(new BarEntry(0,45f));
-        Entries.add(new BarEntry(1,80f));
-        Entries.add(new BarEntry(2,65f));
-        Entries.add(new BarEntry(3,38f));
-        Entries.add(new BarEntry(0,45f));
-        Entries.add(new BarEntry(1,80f));
-        Entries.add(new BarEntry(2,65f));
-        Entries.add(new BarEntry(3,38f));
-        Entries.add(new BarEntry(0,45f));
-        Entries.add(new BarEntry(1,80f));
-        Entries.add(new BarEntry(2,65f));
-        Entries.add(new BarEntry(3,38f));
+    private class FetchDataTask extends AsyncTask<Void, Void, String> {
 
-        YAxis yAxis = barChart.getAxisLeft();
-        yAxis.setAxisMaximum(0f);
-        yAxis.setAxisMaximum(100f);
-        yAxis.setAxisLineWidth(2f);
-        yAxis.setAxisLineColor(android.R.color.black);
-        yAxis.setLabelCount(10);
+        @Override
+        protected String doInBackground(Void... voids) {
+            try {
+                URL url = new URL("https://vok4mart.000webhostapp.com/Api_mobile/DashboardApi.php"); // Ganti dengan URL API PHP Anda
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder result = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    result.append(line);
+                }
+                reader.close();
+                connection.disconnect();
+                return result.toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
 
-        BarDataSet dataSet = new BarDataSet(Entries, "Subjects");
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        @Override
+        protected void onPostExecute(String jsonData) {
+            super.onPostExecute(jsonData);
+            if (jsonData != null) {
+                createBarChart(jsonData);
+            }
+        }
+    }
 
-        BarData barData = new BarData(dataSet);
-        barChart.setData(barData);
+    private void createBarChart(String jsonData) {
+        try {
+            JSONArray jsonArray = new JSONArray(jsonData);
+            List<String> xValues = new ArrayList<>();
+            ArrayList<BarEntry> entries = new ArrayList<>();
 
-        barChart.getDescription().setEnabled(false);
-        barChart.invalidate();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String month = jsonObject.getString("bulan");
+                float value = (float) jsonObject.getDouble("total_pemasukan");
+                entries.add(new BarEntry(i, value));
+                xValues.add(month);
+            }
 
-        barChart.getXAxis().setValueFormatter( new IndexAxisValueFormatter(xValues));
-        barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
-        barChart.getXAxis().setGranularity(1f);
-        barChart.getXAxis().setGranularityEnabled(true);
+            YAxis yAxis = barChart.getAxisLeft();
+            yAxis.setAxisMinimum(0f);
+//             yAxis.setAxisMaximum(100f); // Dibatalkan agar nilai maksimum disesuaikan dengan total pemasukan
+            yAxis.setAxisLineWidth(2f);
+            yAxis.setAxisLineColor(android.R.color.black);
+            yAxis.setLabelCount(10);
 
+            BarDataSet dataSet = new BarDataSet(entries, "Total Pemasukan");
+            dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+            BarData barData = new BarData(dataSet);
+            barChart.setData(barData);
+
+            barChart.getDescription().setEnabled(false);
+            barChart.invalidate();
+
+            // Set X-axis values
+            barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xValues));
+            barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+            barChart.getXAxis().setGranularity(1f);
+            barChart.getXAxis().setGranularityEnabled(true);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

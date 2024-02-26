@@ -84,7 +84,7 @@ public class DetailPesananBaru extends AppCompatActivity {
                     private void update(String id) {
                         // Menggunakan this sebagai Context karena berada di dalam AppCompatActivity
                         RequestQueue queue = Volley.newRequestQueue(DetailPesananBaru.this);
-                        String url = "https://vok4mart.000webhostapp.com/UpdatePesananBaruApi.php";
+                        String url = "https://vok4mart.000webhostapp.com/Api_mobile/UpdatePesananBaru.php";
 
                         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                                 new Response.Listener<String>() {
@@ -133,7 +133,7 @@ public class DetailPesananBaru extends AppCompatActivity {
                 private void tolak(String id) {
                     // Menggunakan this sebagai Context karena berada di dalam AppCompatActivity
                     RequestQueue queue = Volley.newRequestQueue(DetailPesananBaru.this);
-                    String url = "https://vok4mart.000webhostapp.com/BatalkanPesananApi.php";
+                    String url = "https://vok4mart.000webhostapp.com/Api_mobile/HapusPesanan.php";
 
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                             new Response.Listener<String>() {
@@ -184,7 +184,7 @@ public class DetailPesananBaru extends AppCompatActivity {
     }
 
     private void parseJSON() {
-        String url = "https://vok4mart.000webhostapp.com/ApiPesananBaru.php?id_pesanan=" + MPesananBaru.getIdPesanan();
+        String url = "https://vok4mart.000webhostapp.com/Api_mobile/ApiPesananBaru.php?id_pesanan=" + MPesananBaru.getIdPesanan();
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -192,6 +192,9 @@ public class DetailPesananBaru extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response != null) {
+                                // Bersihkan data yang sudah ada di detailPesanan
+                                detailPesanan.clear();
+
                                 JSONArray jsonArray = response.getJSONArray("data");
 
                                 for (int i = 0; i < jsonArray.length(); i++) {
@@ -206,6 +209,7 @@ public class DetailPesananBaru extends AppCompatActivity {
                                     Alamat.append(alamat);
                                 }
 
+                                // Beritahu adapter bahwa data telah berubah
                                 adapter.notifyDataSetChanged();
                             }
                         } catch (JSONException e) {

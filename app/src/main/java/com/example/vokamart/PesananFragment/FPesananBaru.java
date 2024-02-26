@@ -92,9 +92,10 @@ public class FPesananBaru extends Fragment {
             SharedPreferences sharedPreferences = requireContext().getSharedPreferences("detail", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            String url = "https://vok4mart.000webhostapp.com/ApiPesananBaru.php";
+            String url = "https://vok4mart.000webhostapp.com/Api_mobile/ApiPesananBaru.php";
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
